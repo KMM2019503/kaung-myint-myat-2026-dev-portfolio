@@ -1,0 +1,9 @@
+{
+	"permissions": {
+		"allow": [
+			"Read(//Users/betterhr/Developer/personal/kaungmyintmyat_portfolio/**)",
+			"Bash(bunx playwright install chromium)"
+		],
+		"additionalDirectories": ["/Users/betterhr/Developer/personal/kaungmyintmyat_portfolio/public"]
+	}
+}
