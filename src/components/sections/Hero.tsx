@@ -71,8 +71,6 @@ export function Hero() {
 	const sectionRef = useRef<HTMLDivElement>(null);
 	const headingRef = useRef<HTMLDivElement>(null);
 	const productBadgeRef = useRef<HTMLDivElement>(null);
-	const descriptionRef = useRef<HTMLDivElement>(null);
-	const ctaRef = useRef<HTMLDivElement>(null);
 	const visualRef = useRef<HTMLDivElement>(null);
 	const chipLayerRef = useRef<HTMLDivElement>(null);
 	const inCardBadgeTickerRef = useRef<HTMLDivElement>(null);
@@ -89,16 +87,6 @@ export function Hero() {
 				duration: 0.9,
 				stagger: 0.14,
 			});
-
-			timeline.from(
-				descriptionRef.current,
-				{
-					y: 24,
-					opacity: 0,
-					duration: 0.7,
-				},
-				"-=0.45",
-			);
 
 			timeline.from(
 				visualRef.current,
@@ -375,116 +363,7 @@ export function Hero() {
 							</Text>
 						</Box>
 
-						<Box
-							ref={descriptionRef}
-							data-hero-message="true"
-							mt={{ base: 4, md: 6 }}
-							w="full"
-							maxW={{ lg: "580px", xl: "600px" }}
-							pl={{ base: 3.5, md: 5 }}
-							pr={{ base: 3.5, md: 3 }}
-							py={{ base: 2, md: 3 }}
-							border="1px solid"
-							borderColor="color-mix(in srgb, var(--surface-floating-border) 72%, transparent)"
-							borderLeftWidth={{ base: "3px", md: "4px" }}
-							borderLeftStyle="solid"
-							borderLeftColor="var(--color-primary-500)"
-							borderRadius="md"
-							bg="color-mix(in srgb, var(--surface-floating) 82%, transparent)"
-							css={{
-								backdropFilter: "blur(14px) saturate(145%)",
-								boxShadow: "0 20px 40px -30px rgba(15, 23, 42, 0.45)",
-							}}
-						>
-							<Flex align="center" gap="2" mb={{ base: "2", md: "2.5" }}>
-								<Box
-									w="9px"
-									h="9px"
-									borderRadius="full"
-									bg="var(--color-primary-500)"
-									css={{
-										boxShadow:
-											"0 0 0 7px color-mix(in srgb, var(--color-primary-300) 42%, transparent)",
-									}}
-								/>
-								<Text
-									fontSize={{ base: "sm", md: "md" }}
-									fontWeight="700"
-									letterSpacing="0.06em"
-									textTransform="uppercase"
-									color="var(--color-text-primary)"
-								>
-									Product-minded Engineering
-								</Text>
-							</Flex>
-
-							<Text
-								fontSize={{ base: "md", md: "lg", lg: "xl" }}
-								lineHeight={{ base: "1.7", md: "1.8" }}
-								color="var(--color-text-primary)"
-								maxW="60ch"
-								fontWeight="500"
-							>
-								Product-minded engineer focused on speed, clarity, and scalable architecture.
-							</Text>
-
-							<Flex
-								mt={{ base: 2.5, md: 3.5 }}
-								direction="column"
-								gap={{ base: "1.5", md: "2" }}
-								maxW="62ch"
-							>
-								<Box px={{ base: 2.5, md: 3.5 }} py={{ base: 1.5, md: 2.5 }} bg="transparent">
-									<Flex align="flex-start" gap="2.5">
-										<Box
-											w={{ base: "7px", md: "8px" }}
-											h={{ base: "7px", md: "8px" }}
-											mt="0.42em"
-											flexShrink={0}
-											borderRadius="full"
-											bg="var(--color-primary-500)"
-										/>
-										<Text
-											fontSize={{ base: "sm", md: "md" }}
-											lineHeight={{ base: "1.5", md: "1.6" }}
-											color="var(--color-text-secondary)"
-											fontWeight="500"
-										>
-											Built and scaled HR platforms used by{" "}
-											<Box as="span" color="var(--color-text-accent-strong)" fontWeight="700">
-												50K+ daily users.
-											</Box>
-										</Text>
-									</Flex>
-								</Box>
-
-								<Box px={{ base: 2.5, md: 3.5 }} py={{ base: 1.5, md: 2.5 }} bg="transparent">
-									<Flex align="flex-start" gap="2.5">
-										<Box
-											w={{ base: "7px", md: "8px" }}
-											h={{ base: "7px", md: "8px" }}
-											mt="0.42em"
-											flexShrink={0}
-											borderRadius="full"
-											bg="var(--color-primary-500)"
-										/>
-										<Text
-											fontSize={{ base: "sm", md: "md" }}
-											lineHeight={{ base: "1.5", md: "1.6" }}
-											color="var(--color-text-secondary)"
-											fontWeight="500"
-										>
-											Built complex HR systems for scalability and maintainability across{" "}
-											<Box as="span" color="var(--color-text-accent-strong)" fontWeight="700">
-												8+ countries.
-											</Box>
-										</Text>
-									</Flex>
-								</Box>
-							</Flex>
-						</Box>
-
-						<Flex ref={ctaRef} mt={{ base: 5, md: 6 }} gap="3" flexWrap="wrap" align="center">
+						<Flex mt={{ base: 5, md: 6 }} gap="3" flexWrap="wrap" align="center">
 							<Link
 								href="https://drive.google.com/file/d/1XW9yeee0fN64HLe9Ara_e2-HZTqPveAV/view?usp=sharing"
 								target="_blank"

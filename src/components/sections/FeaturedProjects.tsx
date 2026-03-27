@@ -12,20 +12,17 @@ interface ProjectSlide {
 	accent: string;
 }
 
-interface IntroPrinciple {
-	label: string;
-	title: string;
-	description: string;
-}
-
 interface IntroSlide {
 	type: "intro";
 	id: string;
 	kicker: string;
 	title: string;
 	subtitle: string;
+	cardEyebrow: string;
+	cardTitle: string;
+	cardSummary: string;
+	cardHighlights: string[];
 	accent: string;
-	principles: IntroPrinciple[];
 }
 
 type FeaturedSlide = IntroSlide | ProjectSlide;
@@ -37,27 +34,15 @@ const introSlide: IntroSlide = {
 	title: "How I Think Before Project Work Starts",
 	subtitle:
 		"I align product goals, user friction, and engineering tradeoffs first so the work we ship feels intentional, stable, and worth building.",
-	accent: "#f2d6a8",
-	principles: [
-		{
-			label: "Think",
-			title: "Start with product clarity",
-			description:
-				"I turn business goals into clear flows, edge cases, and practical technical direction before touching implementation.",
-		},
-		{
-			label: "Focus",
-			title: "Prioritize what changes outcomes",
-			description:
-				"I focus on speed, reliability, and experience details that users actually feel instead of adding surface-level complexity.",
-		},
-		{
-			label: "Offer",
-			title: "Ship with calm ownership",
-			description:
-				"I bring frontend craft, mobile depth, and dependable execution from idea to polished release.",
-		},
+	cardEyebrow: "Product-minded Engineering",
+	cardTitle: "Product-minded engineer focused on speed, clarity, and scalable architecture.",
+	cardSummary:
+		"The same product thinking behind the hero now anchors this first project screen, right before the case studies.",
+	cardHighlights: [
+		"Built and scaled HR platforms used by 50K+ daily users.",
+		"Built complex HR systems for scalability and maintainability across 8+ countries.",
 	],
+	accent: "#f2d6a8",
 };
 
 const projectSlides: ProjectSlide[] = [
@@ -394,49 +379,109 @@ export function FeaturedProjects() {
 										</Text>
 									</Box>
 
-									<Flex flex="1" direction="column" gap={{ base: 3, md: 4 }} minW="0">
-										{slide.principles.map((principle) => (
-											<Box
-												key={principle.label}
-												data-project-anim
-												p={{ base: 4, md: 5 }}
-												borderRadius="2xl"
-												border="1px solid"
-												borderColor="color-mix(in srgb, var(--surface-floating-border) 78%, transparent)"
-												bg="color-mix(in srgb, var(--color-bg-primary) 46%, transparent)"
-												css={{
-													boxShadow: "0 22px 32px -30px rgba(8, 16, 30, 0.78)",
-												}}
-											>
+									<Box
+										data-project-anim
+										flex="1"
+										minW="0"
+										maxW={{ lg: "520px" }}
+										pl={{ lg: 2 }}
+									>
+										<Box
+											w="full"
+											pl={{ base: 4, md: 5 }}
+											pr={{ base: 4, md: 5 }}
+											py={{ base: 4, md: 5 }}
+											border="1px solid"
+											borderColor="color-mix(in srgb, var(--surface-floating-border) 72%, transparent)"
+											borderLeftWidth={{ base: "3px", md: "4px" }}
+											borderLeftStyle="solid"
+											borderLeftColor="var(--color-primary-500)"
+											borderRadius="2xl"
+											bg="color-mix(in srgb, var(--surface-floating) 82%, transparent)"
+											css={{
+												backdropFilter: "blur(14px) saturate(145%)",
+												boxShadow: "0 20px 40px -30px rgba(15, 23, 42, 0.45)",
+											}}
+										>
+											<Flex align="center" gap="2" mb={{ base: "2", md: "2.5" }}>
+												<Box
+													w="9px"
+													h="9px"
+													borderRadius="full"
+													bg="var(--color-primary-500)"
+													css={{
+														boxShadow:
+															"0 0 0 7px color-mix(in srgb, var(--color-primary-300) 42%, transparent)",
+													}}
+												/>
 												<Text
-													fontSize={{ base: "2xs", md: "xs" }}
+													fontSize={{ base: "sm", md: "md" }}
 													fontWeight="700"
-													letterSpacing="0.14em"
+													letterSpacing="0.06em"
 													textTransform="uppercase"
-													color={slide.accent}
-												>
-													{principle.label}
-												</Text>
-												<Text
-													mt="2"
-													fontSize={{ base: "lg", md: "xl" }}
-													fontWeight="700"
-													letterSpacing="-0.02em"
 													color="var(--color-text-primary)"
 												>
-													{principle.title}
+													{slide.cardEyebrow}
 												</Text>
-												<Text
-													mt="2"
-													fontSize={{ base: "sm", md: "md" }}
-													lineHeight={{ base: "1.7", md: "1.75" }}
-													color="var(--color-text-secondary)"
-												>
-													{principle.description}
-												</Text>
-											</Box>
-										))}
-									</Flex>
+											</Flex>
+
+											<Text
+												fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+												lineHeight={{ base: "1.45", md: "1.35" }}
+												color="var(--color-text-primary)"
+												maxW="20ch"
+												fontWeight="600"
+												letterSpacing="-0.02em"
+											>
+												{slide.cardTitle}
+											</Text>
+
+											<Text
+												mt={{ base: 3, md: 3.5 }}
+												fontSize={{ base: "sm", md: "md" }}
+												lineHeight={{ base: "1.7", md: "1.75" }}
+												color="var(--color-text-secondary)"
+												maxW="54ch"
+											>
+												{slide.cardSummary}
+											</Text>
+
+											<Flex
+												mt={{ base: 4, md: 5 }}
+												direction="column"
+												gap={{ base: "2", md: "2.5" }}
+												maxW="58ch"
+											>
+												{slide.cardHighlights.map((highlight) => (
+													<Box
+														key={highlight}
+														px={{ base: 2.5, md: 3.5 }}
+														py={{ base: 1.5, md: 2.5 }}
+														bg="transparent"
+													>
+														<Flex align="flex-start" gap="2.5">
+															<Box
+																w={{ base: "7px", md: "8px" }}
+																h={{ base: "7px", md: "8px" }}
+																mt="0.42em"
+																flexShrink={0}
+																borderRadius="full"
+																bg="var(--color-primary-500)"
+															/>
+															<Text
+																fontSize={{ base: "sm", md: "md" }}
+																lineHeight={{ base: "1.5", md: "1.6" }}
+																color="var(--color-text-secondary)"
+																fontWeight="500"
+															>
+																{highlight}
+															</Text>
+														</Flex>
+													</Box>
+												))}
+											</Flex>
+										</Box>
+									</Box>
 								</Flex>
 							) : (
 								<>
