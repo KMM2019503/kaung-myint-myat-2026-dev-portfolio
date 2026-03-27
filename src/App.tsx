@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
 import Navbar from "@/components/ui/Navbar";
 
@@ -27,6 +28,7 @@ function App() {
 
 			<Box as="main" position="relative" zIndex="1">
 				<Hero />
+				<FeaturedProjects />
 			</Box>
 		</Box>
 	);

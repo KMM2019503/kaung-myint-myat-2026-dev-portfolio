@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Heading, Link, Text } from "@chakra-ui/react";
-import { gsap } from "gsap";
-import { Download, FolderOpen, MapPin, Sparkles } from "lucide-react";
+import { gsap } from "@/lib/gsap";
+import { Download, MapPin, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const floatingChips = [
@@ -173,6 +173,39 @@ export function Hero() {
 	}, []);
 
 	useEffect(() => {
+		const projectsSection = document.getElementById("projects");
+		if (!projectsSection || !sectionRef.current) {
+			return;
+		}
+
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			return;
+		}
+
+		const ctx = gsap.context(() => {
+			gsap.timeline({
+				scrollTrigger: {
+					trigger: projectsSection,
+					start: "top bottom",
+					end: "top top",
+					scrub: true,
+					pin: sectionRef.current,
+					pinSpacing: false,
+					anticipatePin: 1,
+				},
+			}).to(sectionRef.current, {
+				scale: 0.94,
+				yPercent: -7,
+				opacity: 0.16,
+				transformOrigin: "center top",
+				ease: "none",
+			});
+		}, sectionRef);
+
+		return () => ctx.revert();
+	}, []);
+
+	useEffect(() => {
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 			setTypedCodeLines(codeLines);
 			setActiveTypingLine(null);
@@ -228,6 +261,7 @@ export function Hero() {
 			ref={sectionRef}
 			minH="100vh"
 			position="relative"
+			zIndex="1"
 			overflowX="hidden"
 			display="flex"
 			alignItems="center"
@@ -451,35 +485,6 @@ export function Hero() {
 						</Box>
 
 						<Flex ref={ctaRef} mt={{ base: 5, md: 6 }} gap="3" flexWrap="wrap" align="center">
-							<Link
-								href="https://github.com/KMM2019503?tab=repositories"
-								target="_blank"
-								rel="noopener noreferrer"
-								display="inline-flex"
-								alignItems="center"
-								gap="2"
-								px={{ base: 5, md: 6 }}
-								py={{ base: 3, md: 3.5 }}
-								borderRadius="full"
-								fontSize={{ base: "sm", md: "md" }}
-								fontWeight="600"
-								color="var(--color-text-inverse)"
-								textDecoration="none"
-								border="1px solid"
-								borderColor="var(--color-accent)"
-								bg="var(--color-accent)"
-								boxShadow="0 18px 28px -20px color-mix(in srgb, var(--color-accent) 86%, transparent)"
-								_hover={{
-									bg: "var(--color-accent-hover)",
-									borderColor: "var(--color-accent-hover)",
-									transform: "translateY(-2px)",
-								}}
-								transition="all 0.24s ease"
-							>
-								<FolderOpen size={16} />
-								View My Projects
-							</Link>
-
 							<Link
 								href="https://drive.google.com/file/d/1XW9yeee0fN64HLe9Ara_e2-HZTqPveAV/view?usp=sharing"
 								target="_blank"

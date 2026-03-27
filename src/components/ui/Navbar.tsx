@@ -1,7 +1,7 @@
 import { Box, Flex, IconButton, Link } from "@chakra-ui/react";
 import type { LucideIcon } from "lucide-react";
-import { Home, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { FolderOpen, Home, Moon, Sun } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 
 interface NavLink {
@@ -10,25 +10,58 @@ interface NavLink {
 	icon: LucideIcon;
 }
 
-const navLinks: NavLink[] = [{ label: "Home", href: "#home", icon: Home }];
+const navLinks: NavLink[] = [
+	{ label: "Home", href: "#home", icon: Home },
+	{ label: "Projects", href: "#projects", icon: FolderOpen },
+];
 
 export function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
+	const [isInitialVisible, setIsInitialVisible] = useState(false);
+	const [isNavVisible, setIsNavVisible] = useState(true);
 	const [activeSection, setActiveSection] = useState("#home");
+	const lastScrollYRef = useRef(0);
+	const scrollRafRef = useRef<number | null>(null);
 	const { theme, toggleTheme } = useTheme();
 
 	useEffect(() => {
-		const timer = setTimeout(() => setIsVisible(true), 100);
-		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 16);
+		const timer = setTimeout(() => setIsInitialVisible(true), 100);
+
+		const updateNavState = () => {
+			const currentScrollY = window.scrollY;
+			const scrollDelta = currentScrollY - lastScrollYRef.current;
+			const isNearTop = currentScrollY <= 28;
+
+			setIsScrolled(currentScrollY > 16);
+
+			if (isNearTop) {
+				setIsNavVisible(true);
+			} else if (Math.abs(scrollDelta) > 6) {
+				setIsNavVisible(scrollDelta < 0);
+			}
+
+			lastScrollYRef.current = currentScrollY;
+			scrollRafRef.current = null;
 		};
 
-		handleScroll();
+		lastScrollYRef.current = window.scrollY;
+		updateNavState();
+
+		const handleScroll = () => {
+			if (scrollRafRef.current !== null) {
+				return;
+			}
+
+			scrollRafRef.current = window.requestAnimationFrame(updateNavState);
+		};
+
 		window.addEventListener("scroll", handleScroll, { passive: true });
 		return () => {
 			clearTimeout(timer);
 			window.removeEventListener("scroll", handleScroll);
+			if (scrollRafRef.current !== null) {
+				window.cancelAnimationFrame(scrollRafRef.current);
+			}
 		};
 	}, []);
 
@@ -83,10 +116,10 @@ export function Navbar() {
 			position="fixed"
 			top={{ base: "2", sm: "3", md: "4", lg: "5" }}
 			left="50%"
-			transform={`translateX(-50%) translateY(${isVisible ? "0" : "-20px"})`}
+			transform={`translateX(-50%) translateY(${isInitialVisible && isNavVisible ? "0" : "-130%"})`}
 			zIndex="1000"
-			opacity={isVisible ? 1 : 0}
-			transition="all 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
+			opacity={isInitialVisible && isNavVisible ? 1 : 0}
+			transition="transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease"
 			w="auto"
 			pointerEvents="none"
 		>
@@ -122,8 +155,8 @@ export function Navbar() {
 								w={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
 								h={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
 								borderRadius="full"
-								opacity={isVisible ? 1 : 0}
-								transform={isVisible ? "translateY(0)" : "translateY(-4px)"}
+								opacity={isInitialVisible ? 1 : 0}
+								transform={isInitialVisible ? "translateY(0)" : "translateY(-4px)"}
 								transition={`all 0.28s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.04}s`}
 								bg={
 									isActive

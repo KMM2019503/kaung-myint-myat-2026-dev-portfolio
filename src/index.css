@@ -155,22 +155,16 @@ h6 {
 	color: #e6f3ff;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-	width: 8px;
+/* Hide Scrollbars (keep scrolling functional) */
+* {
+	-ms-overflow-style: none; /* IE and old Edge */
+	scrollbar-width: none; /* Firefox */
 }
 
-::-webkit-scrollbar-track {
-	background: var(--color-bg-secondary);
-}
-
-::-webkit-scrollbar-thumb {
-	background: var(--color-primary-400);
-	border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: var(--color-primary-500);
+*::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+	display: none; /* Chrome, Safari, Opera */
 }
 
 @keyframes code-caret-blink {
