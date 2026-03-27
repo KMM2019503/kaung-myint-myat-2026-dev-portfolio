@@ -1,0 +1,4 @@
+interface:
+  display_name: "Content Migration"
+  short_description: "Migrate legacy portfolio content safely"
+  default_prompt: "Use $content-migration to migrate profile, project, and image content from the legacy portfolio into this project without changing factual details."

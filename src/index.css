@@ -1,37 +1,47 @@
-@import "tailwindcss";
-
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap");
 
+@import "tailwindcss";
+
 /* CSS Custom Properties - Light Mode (Default) */
 :root {
-	/* Primary Colors - Purple */
-	--color-primary-50: #faf5ff;
-	--color-primary-100: #f3e8ff;
-	--color-primary-200: #e9d5ff;
-	--color-primary-300: #d8b4fe;
-	--color-primary-400: #c084fc;
-	--color-primary-500: #a855f7;
-	--color-primary-600: #9333ea;
-	--color-primary-700: #7c3aed;
-	--color-primary-800: #6b21a8;
-	--color-primary-900: #581c87;
-	--color-primary-950: #3b0764;
+	/* Primary Colors - Ocean Blue */
+	--color-primary-50: #eef9ff;
+	--color-primary-100: #daf0ff;
+	--color-primary-200: #bbe4ff;
+	--color-primary-300: #91d4ff;
+	--color-primary-400: #5dbbf4;
+	--color-primary-500: #2f9ddd;
+	--color-primary-600: #1a82c2;
+	--color-primary-700: #16689d;
+	--color-primary-800: #17547d;
+	--color-primary-900: #184564;
+	--color-primary-950: #132d42;
 
 	/* Background Colors */
-	--color-bg-primary: #ffffff;
-	--color-bg-secondary: #f8fafc;
-	--color-bg-tertiary: #f1f5f9;
+	--color-bg-primary: #f6f9fc;
+	--color-bg-secondary: #ecf2f8;
+	--color-bg-tertiary: #e1eaf2;
 
 	/* Text Colors */
-	--color-text-primary: #0f172a;
-	--color-text-secondary: #475569;
-	--color-text-tertiary: #94a3b8;
+	--color-text-primary: #102033;
+	--color-text-secondary: #435c73;
+	--color-text-tertiary: #6e8498;
+	--color-text-eyebrow: #6a8197;
 	--color-text-inverse: #ffffff;
+	/* Text Consistency Roles */
+	--color-text-accent: #1a82c2;
+	--color-text-accent-strong: #16689d;
+	--gradient-text-accent: linear-gradient(120deg, #1a82c2, #46aeea);
 
 	/* Border Colors */
-	--color-border: #e2e8f0;
-	--color-border-hover: #cbd5e1;
+	--color-border: #cedbe7;
+	--color-border-hover: #b9cada;
+
+	/* Floating Surfaces */
+	--surface-floating: rgba(247, 251, 255, 0.76);
+	--surface-floating-solid: rgba(247, 251, 255, 0.92);
+	--surface-floating-border: rgba(183, 201, 218, 0.9);
 
 	/* Accent Colors */
 	--color-accent: var(--color-primary-600);
@@ -54,19 +64,33 @@
 /* Dark Mode */
 .dark {
 	/* Background Colors */
-	--color-bg-primary: #0f172a;
-	--color-bg-secondary: #1e293b;
-	--color-bg-tertiary: #334155;
+	--color-bg-primary: #0b1626;
+	--color-bg-secondary: #142338;
+	--color-bg-tertiary: #1f334e;
 
 	/* Text Colors */
-	--color-text-primary: #f8fafc;
-	--color-text-secondary: #cbd5e1;
-	--color-text-tertiary: #64748b;
-	--color-text-inverse: #0f172a;
+	--color-text-primary: #f4f9ff;
+	--color-text-secondary: #d2e0ef;
+	--color-text-tertiary: #9db4c9;
+	--color-text-eyebrow: #b8cbdd;
+	--color-text-inverse: #0b1626;
+	/* Text Consistency Roles */
+	--color-text-accent: #63c5ff;
+	--color-text-accent-strong: #9fddff;
+	--gradient-text-accent: linear-gradient(120deg, #63c5ff, #9fddff);
 
 	/* Border Colors */
-	--color-border: #334155;
-	--color-border-hover: #475569;
+	--color-border: #2a4058;
+	--color-border-hover: #35506e;
+
+	/* Floating Surfaces */
+	--surface-floating: rgba(13, 25, 40, 0.72);
+	--surface-floating-solid: rgba(13, 25, 40, 0.9);
+	--surface-floating-border: rgba(57, 83, 109, 0.95);
+
+	/* Accent Colors */
+	--color-accent: #63c5ff;
+	--color-accent-hover: #9fddff;
 
 	/* Shadows */
 	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
@@ -88,7 +112,10 @@ html {
 
 body {
 	font-family: "Ubuntu", sans-serif;
-	background-color: var(--color-bg-primary);
+	background:
+		radial-gradient(circle at 8% 14%, rgba(145, 212, 255, 0.18), transparent 44%),
+		radial-gradient(circle at 92% 10%, rgba(47, 157, 221, 0.14), transparent 38%),
+		var(--color-bg-primary);
 	color: var(--color-text-primary);
 	line-height: 1.6;
 	transition:
@@ -120,12 +147,12 @@ h6 {
 /* Selection */
 ::selection {
 	background-color: var(--color-primary-200);
-	color: var(--color-primary-900);
+	color: var(--color-primary-950);
 }
 
 .dark ::selection {
 	background-color: var(--color-primary-700);
-	color: var(--color-primary-100);
+	color: #e6f3ff;
 }
 
 /* Scrollbar */
@@ -144,4 +171,15 @@ h6 {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: var(--color-primary-500);
+}
+
+@keyframes code-caret-blink {
+	0%,
+	49% {
+		opacity: 1;
+	}
+	50%,
+	100% {
+		opacity: 0;
+	}
 }

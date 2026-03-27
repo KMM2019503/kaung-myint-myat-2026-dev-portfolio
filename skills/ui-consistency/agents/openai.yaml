@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Consistency"
+  short_description: "Enforce consistent portfolio UI patterns"
+  default_prompt: "Use $ui-consistency to implement a new UI change that matches this portfolio token system, responsive rhythm, and animation style."

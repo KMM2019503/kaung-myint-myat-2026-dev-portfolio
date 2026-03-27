@@ -1,0 +1,4 @@
+interface:
+  display_name: "GSAP Motion"
+  short_description: "Apply consistent section motion patterns"
+  default_prompt: "Use $gsap-motion to implement smooth, responsive GSAP animations that match this portfolio motion style and mobile performance constraints."

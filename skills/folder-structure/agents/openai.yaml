@@ -1,0 +1,4 @@
+interface:
+  display_name: "Folder Structure"
+  short_description: "Keep consistent React project structure"
+  default_prompt: "Use $folder-structure to place new files in the correct folders and keep this portfolio codebase structure consistent."
