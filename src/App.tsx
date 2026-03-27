@@ -6,7 +6,7 @@ import Navbar from "@/components/ui/Navbar";
 function App() {
 	return (
 		<Box
-			minH="100vh"
+			minH="var(--viewport-height-dynamic)"
 			position="relative"
 			background="var(--color-bg-primary)"
 			color="var(--color-text-primary)"

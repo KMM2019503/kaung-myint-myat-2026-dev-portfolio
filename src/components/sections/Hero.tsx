@@ -171,23 +171,25 @@ export function Hero() {
 		}
 
 		const ctx = gsap.context(() => {
-			gsap.timeline({
-				scrollTrigger: {
-					trigger: projectsSection,
-					start: "top bottom",
-					end: "top top",
-					scrub: true,
-					pin: sectionRef.current,
-					pinSpacing: false,
-					anticipatePin: 1,
-				},
-			}).to(sectionRef.current, {
-				scale: 0.94,
-				yPercent: -7,
-				opacity: 0.16,
-				transformOrigin: "center top",
-				ease: "none",
-			});
+			gsap
+				.timeline({
+					scrollTrigger: {
+						trigger: projectsSection,
+						start: "top bottom",
+						end: "top top",
+						scrub: true,
+						pin: sectionRef.current,
+						pinSpacing: false,
+						anticipatePin: 1,
+					},
+				})
+				.to(sectionRef.current, {
+					scale: 0.94,
+					yPercent: -7,
+					opacity: 0.16,
+					transformOrigin: "center top",
+					ease: "none",
+				});
 		}, sectionRef);
 
 		return () => ctx.revert();
@@ -247,7 +249,7 @@ export function Hero() {
 			as="section"
 			id="home"
 			ref={sectionRef}
-			minH="100vh"
+			minH="var(--viewport-height-dynamic)"
 			position="relative"
 			zIndex="1"
 			overflowX="hidden"

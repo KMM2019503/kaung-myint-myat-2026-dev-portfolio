@@ -5,6 +5,9 @@
 
 /* CSS Custom Properties - Light Mode (Default) */
 :root {
+	/* Viewport Units */
+	--viewport-height-dynamic: 100vh;
+
 	/* Primary Colors - Ocean Blue */
 	--color-primary-50: #eef9ff;
 	--color-primary-100: #daf0ff;
@@ -59,6 +62,12 @@
 		var(--color-primary-500) 0%,
 		var(--color-primary-700) 100%
 	);
+}
+
+@supports (height: 100dvh) {
+	:root {
+		--viewport-height-dynamic: 100dvh;
+	}
 }
 
 /* Dark Mode */

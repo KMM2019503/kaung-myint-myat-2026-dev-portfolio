@@ -136,6 +136,51 @@ export function FeaturedProjects() {
 			return;
 		}
 
+		const sectionElement = sectionRef.current;
+
+		let pinTrigger: ReturnType<typeof ScrollTrigger.create> | null = null;
+		let lastTouchX = 0;
+		let lastTouchY = 0;
+
+		const supportsHorizontalSwipe = () =>
+			window.matchMedia("(pointer: coarse) and (max-width: 768px)").matches;
+
+		const handleTouchStart = (event: TouchEvent) => {
+			if (!supportsHorizontalSwipe() || event.touches.length !== 1) {
+				return;
+			}
+
+			const touch = event.touches[0];
+			lastTouchX = touch.clientX;
+			lastTouchY = touch.clientY;
+		};
+
+		const handleTouchMove = (event: TouchEvent) => {
+			if (!supportsHorizontalSwipe() || event.touches.length !== 1) {
+				return;
+			}
+
+			const touch = event.touches[0];
+			const deltaX = touch.clientX - lastTouchX;
+			const deltaY = touch.clientY - lastTouchY;
+
+			lastTouchX = touch.clientX;
+			lastTouchY = touch.clientY;
+
+			if (!pinTrigger?.isActive || Math.abs(deltaX) <= Math.abs(deltaY)) {
+				return;
+			}
+
+			if (event.cancelable) {
+				event.preventDefault();
+			}
+
+			window.scrollTo({
+				top: window.scrollY - deltaX,
+				behavior: "auto",
+			});
+		};
+
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 			if (overlayRef.current) {
 				overlayRef.current.style.opacity = "1";
@@ -210,7 +255,7 @@ export function FeaturedProjects() {
 				},
 			);
 
-			const pinTrigger = ScrollTrigger.create({
+			const localPinTrigger = ScrollTrigger.create({
 				trigger: sectionRef.current,
 				start: "top top",
 				end: () => `+=${getHoldDistance() + getScrollDistance()}`,
@@ -218,14 +263,15 @@ export function FeaturedProjects() {
 				anticipatePin: 1,
 				invalidateOnRefresh: true,
 			});
+			pinTrigger = localPinTrigger;
 
 			const horizontalTween = gsap.to(trackRef.current, {
 				x: () => -getScrollDistance(),
 				ease: "none",
 				scrollTrigger: {
 					trigger: sectionRef.current,
-					start: () => pinTrigger.start + getHoldDistance(),
-					end: () => pinTrigger.start + getHoldDistance() + getScrollDistance(),
+					start: () => localPinTrigger.start + getHoldDistance(),
+					end: () => localPinTrigger.start + getHoldDistance() + getScrollDistance(),
 					scrub: 1,
 					invalidateOnRefresh: true,
 					onUpdate: (self) => updateScrollNavigator(self.progress),
@@ -278,20 +324,28 @@ export function FeaturedProjects() {
 			});
 		}, sectionRef);
 
-		return () => ctx.revert();
+		sectionElement.addEventListener("touchstart", handleTouchStart, { passive: true });
+		sectionElement.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+		return () => {
+			sectionElement.removeEventListener("touchstart", handleTouchStart);
+			sectionElement.removeEventListener("touchmove", handleTouchMove);
+			ctx.revert();
+		};
 	}, []);
 
 	return (
 		<Box
 			as="section"
 			id="projects"
-			ref={sectionRef}
-			position="relative"
-			zIndex={2}
-			h="100vh"
-			overflow="hidden"
-			scrollMarginTop="120px"
-		>
+				ref={sectionRef}
+				position="relative"
+				zIndex={2}
+				h="100vh"
+				overflow="hidden"
+				touchAction={{ base: "pan-y", md: "auto" }}
+				scrollMarginTop="30px"
+			>
 			<Box
 				ref={overlayRef}
 				position="absolute"
@@ -310,12 +364,12 @@ export function FeaturedProjects() {
 			/>
 
 			<Flex
-				ref={trackRef}
-				position="relative"
-				zIndex={1}
-				h="100vh"
-				w={`${slides.length * 100}vw`}
-				willChange="transform"
+					ref={trackRef}
+					position="relative"
+					zIndex={1}
+					h="100vh"
+					w={`${slides.length * 100}vw`}
+					willChange="transform"
 			>
 				{slides.map((slide) => (
 					<Box
