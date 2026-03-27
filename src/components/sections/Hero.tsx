@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import { gsap } from "gsap";
-import { Download, MapPin, Sparkles } from "lucide-react";
+import { Download, FolderOpen, MapPin, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const floatingChips = [
@@ -101,22 +101,10 @@ export function Hero() {
 			);
 
 			timeline.from(
-				ctaRef.current?.children ?? [],
-				{
-					y: 18,
-					opacity: 0,
-					duration: 0.6,
-					stagger: 0.1,
-				},
-				"-=0.35",
-			);
-
-			timeline.from(
 				visualRef.current,
 				{
 					y: 32,
 					opacity: 0,
-					scale: 0.96,
 					duration: 0.95,
 				},
 				"-=0.65",
@@ -240,7 +228,7 @@ export function Hero() {
 			ref={sectionRef}
 			minH="100vh"
 			position="relative"
-			overflow="hidden"
+			overflowX="hidden"
 			display="flex"
 			alignItems="center"
 			justifyContent="center"
@@ -462,31 +450,36 @@ export function Hero() {
 							</Flex>
 						</Box>
 
-						<Flex
-							mt={{ base: 3.5, md: 5 }}
-							align={{ base: "flex-start", md: "center" }}
-							direction={{ base: "column", md: "row" }}
-							gap={{ base: "1.5", md: "3" }}
-							color="var(--color-text-tertiary)"
-							fontSize={{ base: "sm", md: "md" }}
-							fontWeight="500"
-							flexWrap="wrap"
-						>
-							<Flex align="center" gap="2">
-								<MapPin size={16} />
-								<Text>Yangon, Myanmar</Text>
-							</Flex>
-							<Box
-								display={{ base: "none", md: "block" }}
-								w="4px"
-								h="4px"
+						<Flex ref={ctaRef} mt={{ base: 5, md: 6 }} gap="3" flexWrap="wrap" align="center">
+							<Link
+								href="https://github.com/KMM2019503?tab=repositories"
+								target="_blank"
+								rel="noopener noreferrer"
+								display="inline-flex"
+								alignItems="center"
+								gap="2"
+								px={{ base: 5, md: 6 }}
+								py={{ base: 3, md: 3.5 }}
 								borderRadius="full"
-								bg="var(--color-primary-500)"
-							/>
-							<Text>Remote-friendly collaborator</Text>
-						</Flex>
+								fontSize={{ base: "sm", md: "md" }}
+								fontWeight="600"
+								color="var(--color-text-inverse)"
+								textDecoration="none"
+								border="1px solid"
+								borderColor="var(--color-accent)"
+								bg="var(--color-accent)"
+								boxShadow="0 18px 28px -20px color-mix(in srgb, var(--color-accent) 86%, transparent)"
+								_hover={{
+									bg: "var(--color-accent-hover)",
+									borderColor: "var(--color-accent-hover)",
+									transform: "translateY(-2px)",
+								}}
+								transition="all 0.24s ease"
+							>
+								<FolderOpen size={16} />
+								View My Projects
+							</Link>
 
-						<Flex ref={ctaRef} mt={{ base: 6, md: 8 }} gap="3" flexWrap="wrap" align="center">
 							<Link
 								href="https://drive.google.com/file/d/1XW9yeee0fN64HLe9Ara_e2-HZTqPveAV/view?usp=sharing"
 								target="_blank"
@@ -514,6 +507,30 @@ export function Hero() {
 								<Download size={16} />
 								Download CV
 							</Link>
+						</Flex>
+
+						<Flex
+							mt={{ base: 4, md: 5 }}
+							align={{ base: "flex-start", md: "center" }}
+							direction={{ base: "column", md: "row" }}
+							gap={{ base: "1.5", md: "3" }}
+							color="var(--color-text-tertiary)"
+							fontSize={{ base: "sm", md: "md" }}
+							fontWeight="500"
+							flexWrap="wrap"
+						>
+							<Flex align="center" gap="2">
+								<MapPin size={16} />
+								<Text>Yangon, Myanmar</Text>
+							</Flex>
+							<Box
+								display={{ base: "none", md: "block" }}
+								w="4px"
+								h="4px"
+								borderRadius="full"
+								bg="var(--color-primary-500)"
+							/>
+							<Text>Remote-friendly collaborator</Text>
 						</Flex>
 					</Flex>
 
@@ -575,6 +592,8 @@ export function Hero() {
 								border="1px solid"
 								borderColor="var(--color-border)"
 								p={{ base: 3.5, md: 5 }}
+								minH={{ base: "120px", md: "170px" }}
+								overflowX="auto"
 							>
 								{codeLines.map((line, index) => (
 									<Text
@@ -582,6 +601,7 @@ export function Hero() {
 										fontFamily='"IBM Plex Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace'
 										fontSize={{ base: "2xs", md: "sm" }}
 										lineHeight={{ base: "1.8", md: "1.9" }}
+										whiteSpace="pre"
 										color={
 											index === 0 || index === codeLines.length - 1
 												? "var(--color-text-accent)"

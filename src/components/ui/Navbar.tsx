@@ -81,7 +81,7 @@ export function Navbar() {
 		<Box
 			as="nav"
 			position="fixed"
-			top={{ base: "3", md: "6" }}
+			top={{ base: "2", sm: "3", md: "4", lg: "5" }}
 			left="50%"
 			transform={`translateX(-50%) translateY(${isVisible ? "0" : "-20px"})`}
 			zIndex="1000"
@@ -92,9 +92,9 @@ export function Navbar() {
 		>
 			<Flex
 				align="center"
-				gap={{ base: "1.5", md: "2" }}
-				px={{ base: "2", md: "2.5" }}
-				py={{ base: "2", md: "2.5" }}
+				gap={{ base: "1", sm: "1.5", md: "1.5", lg: "2" }}
+				px={{ base: "1.5", sm: "2", md: "2", lg: "2.25" }}
+				py={{ base: "1.5", sm: "1.75", md: "2", lg: "2.25" }}
 				borderRadius="999px"
 				pointerEvents="auto"
 				css={{
@@ -119,8 +119,8 @@ export function Navbar() {
 								display="flex"
 								alignItems="center"
 								justifyContent="center"
-								w={{ base: "38px", md: "40px" }}
-								h={{ base: "38px", md: "40px" }}
+								w={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
+								h={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
 								borderRadius="full"
 								opacity={isVisible ? 1 : 0}
 								transform={isVisible ? "translateY(0)" : "translateY(-4px)"}
@@ -152,7 +152,7 @@ export function Navbar() {
 										"0 0 0 2px color-mix(in srgb, var(--color-primary-500) 36%, transparent)",
 								}}
 							>
-								<Icon size={18} />
+								<Icon size={16} />
 							</Link>
 						);
 					})}
@@ -160,16 +160,16 @@ export function Navbar() {
 
 				<Box
 					w="1px"
-					h={{ base: "24px", md: "26px" }}
+					h={{ base: "20px", sm: "21px", md: "22px", lg: "24px" }}
 					bg="color-mix(in srgb, var(--surface-floating-border) 85%, transparent)"
 				/>
 
-				<Flex align="center" gap="2">
+				<Flex align="center" gap={{ base: "1.5", md: "1.75", lg: "2" }}>
 					<IconButton
 						variant="ghost"
 						onClick={toggleTheme}
-						w={{ base: "38px", md: "40px" }}
-						h={{ base: "38px", md: "40px" }}
+						w={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
+						h={{ base: "34px", sm: "35px", md: "36px", lg: "38px" }}
 						borderRadius="full"
 						border="1px solid transparent"
 						color="var(--color-text-secondary)"
@@ -185,7 +185,7 @@ export function Navbar() {
 						}}
 						aria-label="Toggle theme"
 					>
-						{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+						{theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
 					</IconButton>
 				</Flex>
 			</Flex>
