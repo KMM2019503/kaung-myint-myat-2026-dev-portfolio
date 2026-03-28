@@ -615,17 +615,9 @@ export function FeaturedProjects() {
 				direction="column"
 				align="center"
 				gap={{ base: "1.5", md: "2" }}
-				px={{ base: 3.5, md: 4.5 }}
-				py={{ base: 2.5, md: 3 }}
-				borderRadius="full"
-				border="1px solid"
-				borderColor="color-mix(in srgb, var(--surface-floating-border) 70%, transparent)"
-				bg="color-mix(in srgb, var(--surface-floating) 62%, transparent)"
+				px={{ base: 2.5, md: 3 }}
+				py={{ base: 2, md: 2.5 }}
 				pointerEvents="none"
-				css={{
-					backdropFilter: "blur(12px) saturate(142%)",
-					boxShadow: "0 22px 40px -30px rgba(8, 16, 30, 0.84)",
-				}}
 			>
 				<Box
 					ref={progressRailRef}
@@ -663,7 +655,7 @@ export function FeaturedProjects() {
 							<Text
 								key={slide.id}
 								fontFamily='"Lora", serif'
-								fontSize={{ base: "lg", md: "2xl" }}
+								fontSize={{ base: "lg", md: "xl" }}
 								fontWeight="500"
 								letterSpacing="-0.02em"
 								lineHeight="1"

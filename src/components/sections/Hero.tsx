@@ -1,7 +1,8 @@
-import { Box, Container, Flex, Heading, Link, Text } from "@chakra-ui/react";
-import { gsap } from "@/lib/gsap";
+import { Box, Container, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
 import { Download, MapPin, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import codingLogo from "@/assets/images/hero.webp";
+import { gsap } from "@/lib/gsap";
 
 const floatingChips = [
 	{
@@ -70,6 +71,7 @@ const codeLines = [
 export function Hero() {
 	const sectionRef = useRef<HTMLDivElement>(null);
 	const headingRef = useRef<HTMLDivElement>(null);
+	const codingLogoRef = useRef<HTMLDivElement>(null);
 	const productBadgeRef = useRef<HTMLDivElement>(null);
 	const visualRef = useRef<HTMLDivElement>(null);
 	const chipLayerRef = useRef<HTMLDivElement>(null);
@@ -132,6 +134,23 @@ export function Hero() {
 				yoyo: true,
 				ease: "sine.inOut",
 			});
+
+			if (codingLogoRef.current) {
+				gsap.set(codingLogoRef.current, {
+					rotate: -4,
+					transformOrigin: "center center",
+				});
+
+				gsap.to(codingLogoRef.current, {
+					y: -10,
+					rotate: 4,
+					duration: 2.8,
+					delay: 1.1,
+					repeat: -1,
+					yoyo: true,
+					ease: "sine.inOut",
+				});
+			}
 
 			if (productBadgeRef.current) {
 				gsap.to(productBadgeRef.current, {
@@ -287,6 +306,22 @@ export function Hero() {
 				>
 					<Flex direction="column" flex="1" minW="0" maxW={{ lg: "600px", xl: "620px" }}>
 						<Box ref={headingRef} mt={{ base: 5, md: 6 }}>
+							<Box
+								ref={codingLogoRef}
+								display="inline-flex"
+								mb={{ base: 4, md: 5 }}
+								p={{ base: "2", md: "2.5" }}
+							>
+								<Image
+									src={codingLogo}
+									alt="Coding astronaut illustration"
+									w={{ base: "84px", md: "108px" }}
+									h={{ base: "84px", md: "108px" }}
+									objectFit="cover"
+									borderRadius={{ base: "xl", md: "2xl" }}
+								/>
+							</Box>
+
 							<Text
 								fontSize={{ base: "xs", md: "lg" }}
 								fontWeight="700"
