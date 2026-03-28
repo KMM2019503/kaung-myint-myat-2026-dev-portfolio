@@ -20,9 +20,32 @@ export function Navbar() {
 	const [isInitialVisible, setIsInitialVisible] = useState(false);
 	const [isNavVisible, setIsNavVisible] = useState(true);
 	const [activeSection, setActiveSection] = useState("#home");
+	const navRef = useRef<HTMLDivElement>(null);
 	const lastScrollYRef = useRef(0);
 	const scrollRafRef = useRef<number | null>(null);
 	const { theme, toggleTheme } = useTheme();
+
+	const scrollToSection = (href: string) => {
+		const sectionId = href.replace("#", "");
+		const targetSection = document.getElementById(sectionId);
+		if (!targetSection) {
+			return;
+		}
+
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const navHeight = navRef.current?.offsetHeight ?? 0;
+		const navTopOffset = navRef.current
+			? Number.parseFloat(window.getComputedStyle(navRef.current).top || "0")
+			: 0;
+		const scrollOffset = navHeight + navTopOffset + 10;
+		const targetY = targetSection.getBoundingClientRect().top + window.scrollY - scrollOffset;
+
+		window.history.replaceState(null, "", href);
+		window.scrollTo({
+			top: Math.max(0, targetY),
+			behavior: prefersReducedMotion ? "auto" : "smooth",
+		});
+	};
 
 	useEffect(() => {
 		const timer = setTimeout(() => setIsInitialVisible(true), 100);
@@ -113,6 +136,7 @@ export function Navbar() {
 	return (
 		<Box
 			as="nav"
+			ref={navRef}
 			position="fixed"
 			top={{ base: "2", sm: "3", md: "4", lg: "5" }}
 			left="50%"
@@ -148,7 +172,12 @@ export function Navbar() {
 							<Link
 								key={link.label}
 								href={link.href}
-								onClick={() => setActiveSection(link.href)}
+								onClick={(event) => {
+									event.preventDefault();
+									setActiveSection(link.href);
+									setIsNavVisible(true);
+									scrollToSection(link.href);
+								}}
 								display="flex"
 								alignItems="center"
 								justifyContent="center"

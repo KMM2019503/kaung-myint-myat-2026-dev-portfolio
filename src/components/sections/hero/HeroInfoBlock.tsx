@@ -1,6 +1,6 @@
-import { Box, Flex, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { DotIcon } from "lucide-react";
 import type { RefObject } from "react";
-import { downloadCvHref } from "./Hero.constants";
 
 interface HeroInfoBlockProps {
 	headingRef: RefObject<HTMLDivElement | null>;
@@ -16,6 +16,50 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 			justifySelf={{ lg: "end" }}
 			pr={{ lg: 3, xl: 4 }}
 		>
+			<Flex
+				mt={{ base: 2, md: 3 }}
+				align="end"
+				gap={{ base: 2, md: 2.5 }}
+				w="fit-content"
+				px={{ base: 3, md: 3.5 }}
+				py={{ base: 1.5, md: 2 }}
+				borderRadius="2xl"
+				bg="color-mix(in srgb, var(--color-primary-100) 14%, transparent)"
+				border="1px solid"
+				borderColor="color-mix(in srgb, var(--color-primary-500) 32%, transparent)"
+				color="var(--color-text-accent-strong)"
+				css={{
+					boxShadow:
+						"0 14px 24px -20px color-mix(in srgb, var(--color-text-accent-strong) 70%, transparent)",
+				}}
+			>
+				<Text
+					fontSize={{ base: "xl", md: "3xl", xl: "4xl" }}
+					fontWeight="700"
+					letterSpacing="0.06em"
+					lineHeight="1"
+				>
+					你好,
+				</Text>
+				<Text
+					fontSize={{ base: "xs", sm: "sm" }}
+					fontWeight="700"
+					letterSpacing="0.06em"
+					lineHeight="1"
+				>
+					I'm
+				</Text>
+			</Flex>
+			<Text
+				mt={{ base: 2, md: 3 }}
+				fontSize={{ base: "sm", md: "xl", xl: "xl" }}
+				fontWeight="700"
+				letterSpacing="0.16em"
+				textTransform="uppercase"
+				color="var(--color-text-eyebrow)"
+			>
+				Kaung Myint Myat
+			</Text>
 			<Text
 				as="h1"
 				mt={{ base: 3, md: 4 }}
@@ -38,63 +82,34 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 			>
 				Mobile Developer
 			</Text>
-			<Text
-				mt={{ base: 2, md: 3 }}
-				fontSize={{ base: "sm", md: "md", xl: "lg" }}
-				fontWeight="700"
-				letterSpacing="0.16em"
-				textTransform="uppercase"
-				color="var(--color-text-eyebrow)"
+			<Flex
+				mt={{ base: 3.5, md: 4 }}
+				direction="column"
+				gap={{ base: "1.5", md: "2" }}
+				maxW={{ base: "38ch", xl: "34ch" }}
 			>
-				Kaung Myint Myat
-			</Text>
-
-			<Flex mt={{ base: 4, md: 5 }} align="center" gap={{ base: 3, md: 4 }} wrap="nowrap">
-				<Link
-					href={downloadCvHref}
-					target="_blank"
-					rel="noopener noreferrer"
-					display="inline-flex"
-					fontSize={{ base: "md", md: "lg" }}
-					fontWeight="700"
-					color="var(--color-text-primary)"
-					textDecoration="none"
-					letterSpacing="-0.01em"
-					w="fit-content"
-					whiteSpace="nowrap"
-					_hover={{
-						color: "var(--color-text-accent-strong)",
-					}}
-					transition="all 0.24s ease"
+				<Text
+					fontFamily='"Ubuntu", sans-serif'
+					fontSize={{ base: "xs" }}
+					fontWeight="500"
+					lineHeight="1.5"
+					letterSpacing="0.01em"
+					color="var(--color-text-secondary)"
 				>
-					Download CV
-				</Link>
-
-				<Link
-					href="#projects"
-					display="inline-flex"
-					alignItems="center"
-					justifyContent="center"
-					px={{ base: 3.5, md: 4.5 }}
-					py={{ base: 2.25, md: 2.75 }}
-					borderRadius="full"
-					fontSize={{ base: "sm", md: "md" }}
-					fontWeight="700"
-					color="var(--color-text-primary)"
-					textDecoration="none"
-					border="1px solid"
-					borderColor="var(--color-border)"
-					bg="color-mix(in srgb, var(--color-bg-primary) 72%, transparent)"
-					whiteSpace="nowrap"
-					_hover={{
-						borderColor: "var(--color-primary-500)",
-						color: "var(--color-text-accent-strong)",
-						transform: "translateY(-1px)",
-					}}
-					transition="all 0.24s ease"
+					<DotIcon size={18} color="var(--color-accent)" style={{ display: "inline" }} />
+					Specializing in React, Vue, and React Native
+				</Text>
+				<Text
+					fontFamily='"Ubuntu", sans-serif'
+					fontSize={{ base: "xs" }}
+					fontWeight="500"
+					lineHeight="1.5"
+					letterSpacing="0.01em"
+					color="var(--color-text-secondary)"
 				>
-					Explore About Me
-				</Link>
+					<DotIcon size={18} color="var(--color-accent)" style={{ display: "inline" }} />
+					1.5+ years experience delivering scalable web & mobile applications
+				</Text>
 			</Flex>
 		</Box>
 	);

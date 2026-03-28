@@ -76,11 +76,11 @@ type OrbitObject = OrbitChipObject | OrbitBallObject;
 
 const orbitingObjects: OrbitObject[] = [
 	{
-		id: "chip-typescript",
+		id: "scalable-architecture",
 		angle: 6,
 		duration: 22,
 		type: "chip",
-		label: "TypeScript",
+		label: "Scalable Architecture",
 		orbitInset: { base: "8px", md: "12px", xl: "14px" },
 		chipWidth: { base: "150px", md: "172px", xl: "186px" },
 		chipHeight: { base: "56px", md: "62px", xl: "66px" },
@@ -205,6 +205,7 @@ export function HeroArtStage({ artRef, codingLogoRef }: HeroArtStageProps) {
 			w="full"
 			maxW={{ lg: "420px", xl: "500px" }}
 			justifySelf="center"
+			top={{ lg: "-50px", xl: "-80px" }}
 			minH={{ base: "280px", sm: "340px", md: "420px", xl: "520px" }}
 			display="flex"
 			alignItems="center"
