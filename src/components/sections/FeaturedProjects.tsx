@@ -1,6 +1,8 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useEffect, useRef, useState } from "react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { HeroSnapshotCard } from "./hero/HeroSnapshotCard";
+import { useHeroTyping } from "./hero/useHeroTyping";
 
 interface ProjectSlide {
 	type: "project";
@@ -18,10 +20,6 @@ interface IntroSlide {
 	kicker: string;
 	title: string;
 	subtitle: string;
-	cardEyebrow: string;
-	cardTitle: string;
-	cardSummary: string;
-	cardHighlights: string[];
 	accent: string;
 }
 
@@ -34,14 +32,6 @@ const introSlide: IntroSlide = {
 	title: "How I Think Before Project Work Starts",
 	subtitle:
 		"I align product goals, user friction, and engineering tradeoffs first so the work we ship feels intentional, stable, and worth building.",
-	cardEyebrow: "Product-minded Engineering",
-	cardTitle: "Product-minded engineer focused on speed, clarity, and scalable architecture.",
-	cardSummary:
-		"The same product thinking behind the hero now anchors this first project screen, right before the case studies.",
-	cardHighlights: [
-		"Built and scaled HR platforms used by 50K+ daily users.",
-		"Built complex HR systems for scalability and maintainability across 8+ countries.",
-	],
 	accent: "#f2d6a8",
 };
 
@@ -128,8 +118,12 @@ export function FeaturedProjects() {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const progressRailRef = useRef<HTMLDivElement>(null);
 	const progressThumbRef = useRef<HTMLDivElement>(null);
+	const introCardRef = useRef<HTMLDivElement>(null);
+	const introChipLayerRef = useRef<HTMLDivElement>(null);
+	const introTickerRef = useRef<HTMLDivElement>(null);
 	const activeIndexRef = useRef(0);
 	const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+	const { activeTypingLine, typedCodeLines } = useHeroTyping();
 
 	useEffect(() => {
 		if (!sectionRef.current || !trackRef.current) {
@@ -334,18 +328,62 @@ export function FeaturedProjects() {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !introCardRef.current) {
+			return;
+		}
+
+		const ctx = gsap.context(() => {
+			const chipElements = gsap.utils.toArray<HTMLElement>(
+				introChipLayerRef.current?.children ?? [],
+			);
+			const chipTimings = [1.9, 2.35, 2.75, 2.1, 2.55, 2.95];
+			const chipLift = [-8, -12, -10, -14, -9, -13];
+
+			chipElements.forEach((chip, index) => {
+				gsap.to(chip, {
+					y: chipLift[index % chipLift.length],
+					duration: chipTimings[index % chipTimings.length],
+					delay: index * 0.08,
+					repeat: -1,
+					yoyo: true,
+					ease: "sine.inOut",
+				});
+			});
+
+			gsap.to("[data-orbit]", {
+				y: 16,
+				duration: 3.2,
+				repeat: -1,
+				yoyo: true,
+				ease: "sine.inOut",
+			});
+
+			if (introTickerRef.current && window.matchMedia("(min-width: 768px)").matches) {
+				gsap.to(introTickerRef.current, {
+					xPercent: -50,
+					duration: 28,
+					repeat: -1,
+					ease: "none",
+				});
+			}
+		}, introCardRef);
+
+		return () => ctx.revert();
+	}, []);
+
 	return (
 		<Box
 			as="section"
 			id="projects"
-				ref={sectionRef}
-				position="relative"
-				zIndex={2}
-				h="100vh"
-				overflow="hidden"
-				touchAction={{ base: "pan-y", md: "auto" }}
-				scrollMarginTop="30px"
-			>
+			ref={sectionRef}
+			position="relative"
+			zIndex={2}
+			h="100vh"
+			overflow="hidden"
+			touchAction={{ base: "pan-y", md: "auto" }}
+			scrollMarginTop="30px"
+		>
 			<Box
 				ref={overlayRef}
 				position="absolute"
@@ -364,12 +402,12 @@ export function FeaturedProjects() {
 			/>
 
 			<Flex
-					ref={trackRef}
-					position="relative"
-					zIndex={1}
-					h="100vh"
-					w={`${slides.length * 100}vw`}
-					willChange="transform"
+				ref={trackRef}
+				position="relative"
+				zIndex={1}
+				h="100vh"
+				w={`${slides.length * 100}vw`}
+				willChange="transform"
 			>
 				{slides.map((slide) => (
 					<Box
@@ -433,108 +471,14 @@ export function FeaturedProjects() {
 										</Text>
 									</Box>
 
-									<Box
-										data-project-anim
-										flex="1"
-										minW="0"
-										maxW={{ lg: "520px" }}
-										pl={{ lg: 2 }}
-									>
-										<Box
-											w="full"
-											pl={{ base: 4, md: 5 }}
-											pr={{ base: 4, md: 5 }}
-											py={{ base: 4, md: 5 }}
-											border="1px solid"
-											borderColor="color-mix(in srgb, var(--surface-floating-border) 72%, transparent)"
-											borderLeftWidth={{ base: "3px", md: "4px" }}
-											borderLeftStyle="solid"
-											borderLeftColor="var(--color-primary-500)"
-											borderRadius="2xl"
-											bg="color-mix(in srgb, var(--surface-floating) 82%, transparent)"
-											css={{
-												backdropFilter: "blur(14px) saturate(145%)",
-												boxShadow: "0 20px 40px -30px rgba(15, 23, 42, 0.45)",
-											}}
-										>
-											<Flex align="center" gap="2" mb={{ base: "2", md: "2.5" }}>
-												<Box
-													w="9px"
-													h="9px"
-													borderRadius="full"
-													bg="var(--color-primary-500)"
-													css={{
-														boxShadow:
-															"0 0 0 7px color-mix(in srgb, var(--color-primary-300) 42%, transparent)",
-													}}
-												/>
-												<Text
-													fontSize={{ base: "sm", md: "md" }}
-													fontWeight="700"
-													letterSpacing="0.06em"
-													textTransform="uppercase"
-													color="var(--color-text-primary)"
-												>
-													{slide.cardEyebrow}
-												</Text>
-											</Flex>
-
-											<Text
-												fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
-												lineHeight={{ base: "1.45", md: "1.35" }}
-												color="var(--color-text-primary)"
-												maxW="20ch"
-												fontWeight="600"
-												letterSpacing="-0.02em"
-											>
-												{slide.cardTitle}
-											</Text>
-
-											<Text
-												mt={{ base: 3, md: 3.5 }}
-												fontSize={{ base: "sm", md: "md" }}
-												lineHeight={{ base: "1.7", md: "1.75" }}
-												color="var(--color-text-secondary)"
-												maxW="54ch"
-											>
-												{slide.cardSummary}
-											</Text>
-
-											<Flex
-												mt={{ base: 4, md: 5 }}
-												direction="column"
-												gap={{ base: "2", md: "2.5" }}
-												maxW="58ch"
-											>
-												{slide.cardHighlights.map((highlight) => (
-													<Box
-														key={highlight}
-														px={{ base: 2.5, md: 3.5 }}
-														py={{ base: 1.5, md: 2.5 }}
-														bg="transparent"
-													>
-														<Flex align="flex-start" gap="2.5">
-															<Box
-																w={{ base: "7px", md: "8px" }}
-																h={{ base: "7px", md: "8px" }}
-																mt="0.42em"
-																flexShrink={0}
-																borderRadius="full"
-																bg="var(--color-primary-500)"
-															/>
-															<Text
-																fontSize={{ base: "sm", md: "md" }}
-																lineHeight={{ base: "1.5", md: "1.6" }}
-																color="var(--color-text-secondary)"
-																fontWeight="500"
-															>
-																{highlight}
-															</Text>
-														</Flex>
-													</Box>
-												))}
-											</Flex>
-										</Box>
+									<Box data-project-anim flex="1" minW="0" maxW={{ lg: "520px" }} pl={{ lg: 2 }}>
+										<HeroSnapshotCard
+											visualRef={introCardRef}
+											chipLayerRef={introChipLayerRef}
+											inCardBadgeTickerRef={introTickerRef}
+											typedCodeLines={typedCodeLines}
+											activeTypingLine={activeTypingLine}
+										/>
 									</Box>
 								</Flex>
 							) : (
@@ -572,11 +516,7 @@ export function FeaturedProjects() {
 										{slide.subtitle}
 									</Text>
 
-									<Flex
-										mt={{ base: 5, md: 7 }}
-										gap={{ base: 2.5, md: 3 }}
-										direction="column"
-									>
+									<Flex mt={{ base: 5, md: 7 }} gap={{ base: 2.5, md: 3 }} direction="column">
 										{slide.highlights.map((highlight) => (
 											<Flex key={highlight} data-project-anim align="flex-start" gap="3">
 												<Box
@@ -622,7 +562,10 @@ export function FeaturedProjects() {
 				<Box
 					ref={progressRailRef}
 					position="relative"
-					w={{ base: `${Math.max(slides.length * 34, 110)}px`, md: `${Math.max(slides.length * 40, 136)}px` }}
+					w={{
+						base: `${Math.max(slides.length * 34, 110)}px`,
+						md: `${Math.max(slides.length * 40, 136)}px`,
+					}}
 					h="5px"
 					borderRadius="full"
 					bg="color-mix(in srgb, white 32%, transparent)"
@@ -633,13 +576,15 @@ export function FeaturedProjects() {
 						position="absolute"
 						top="0"
 						left="0"
-						w={{ base: `${Math.max(20, Math.floor(Math.max(slides.length * 34, 110) / slides.length) - 6)}px`, md: `${Math.max(22, Math.floor(Math.max(slides.length * 40, 136) / slides.length) - 8)}px` }}
+						w={{
+							base: `${Math.max(20, Math.floor(Math.max(slides.length * 34, 110) / slides.length) - 6)}px`,
+							md: `${Math.max(22, Math.floor(Math.max(slides.length * 40, 136) / slides.length) - 8)}px`,
+						}}
 						h="100%"
 						borderRadius="full"
 						bg="white"
 						css={{
-							boxShadow:
-								"0 0 0 1px rgba(255, 255, 255, 0.55), 0 0 12px rgba(255, 255, 255, 0.5)",
+							boxShadow: "0 0 0 1px rgba(255, 255, 255, 0.55), 0 0 12px rgba(255, 255, 255, 0.5)",
 						}}
 					/>
 				</Box>
@@ -647,7 +592,10 @@ export function FeaturedProjects() {
 				<Flex
 					direction="row"
 					justify="space-between"
-					w={{ base: `${Math.max(slides.length * 34, 110)}px`, md: `${Math.max(slides.length * 40, 136)}px` }}
+					w={{
+						base: `${Math.max(slides.length * 34, 110)}px`,
+						md: `${Math.max(slides.length * 40, 136)}px`,
+					}}
 				>
 					{slides.map((slide, index) => {
 						const isActive = index === activeSlideIndex;
@@ -662,9 +610,7 @@ export function FeaturedProjects() {
 								color="white"
 								opacity={isActive ? 1 : 0.55}
 								textShadow={
-									isActive
-										? "0 6px 14px rgba(4, 14, 27, 0.42)"
-										: "0 2px 8px rgba(4, 14, 27, 0.22)"
+									isActive ? "0 6px 14px rgba(4, 14, 27, 0.42)" : "0 2px 8px rgba(4, 14, 27, 0.22)"
 								}
 								transition="opacity 0.22s ease"
 							>
