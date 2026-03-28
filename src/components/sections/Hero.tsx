@@ -305,18 +305,23 @@ export function Hero() {
 					gap={{ base: 8, lg: 16, xl: 20 }}
 				>
 					<Flex direction="column" flex="1" minW="0" maxW={{ lg: "600px", xl: "620px" }}>
-						<Box ref={headingRef} mt={{ base: 5, md: 6 }}>
+						<Box
+							ref={headingRef}
+							mt={{ base: 5, md: 6 }}
+						>
 							<Box
 								ref={codingLogoRef}
-								display="inline-flex"
+								display="flex"
+								justifyContent="center"
+								w="full"
 								mb={{ base: 4, md: 5 }}
 								p={{ base: "2", md: "2.5" }}
 							>
 								<Image
 									src={codingLogo}
 									alt="Coding astronaut illustration"
-									w={{ base: "84px", md: "108px" }}
-									h={{ base: "84px", md: "108px" }}
+									w={{ base: "200px", md: "150px" }}
+									h={{ base: "200px", md: "150px" }}
 									objectFit="cover"
 									borderRadius={{ base: "xl", md: "2xl" }}
 								/>
@@ -435,7 +440,7 @@ export function Hero() {
 							align={{ base: "flex-start", md: "center" }}
 							direction={{ base: "column", md: "row" }}
 							gap={{ base: "1.5", md: "3" }}
-							color="var(--color-text-tertiary)"
+							color="var(--color-text-secondary)"
 							fontSize={{ base: "sm", md: "md" }}
 							fontWeight="500"
 							flexWrap="wrap"
