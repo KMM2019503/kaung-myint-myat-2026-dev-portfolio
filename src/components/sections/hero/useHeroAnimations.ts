@@ -80,39 +80,4 @@ export function useHeroAnimations({
 
 		return () => ctx.revert();
 	}, [artRef, codingLogoRef, headingRef, sectionRef, supportRef]);
-
-	useEffect(() => {
-		const projectsSection = document.getElementById("projects");
-		if (!projectsSection || !sectionRef.current) {
-			return;
-		}
-
-		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			return;
-		}
-
-		const ctx = gsap.context(() => {
-			gsap
-				.timeline({
-					scrollTrigger: {
-						trigger: projectsSection,
-						start: "top bottom",
-						end: "top top",
-						scrub: true,
-						pin: sectionRef.current,
-						pinSpacing: false,
-						anticipatePin: 1,
-					},
-				})
-				.to(sectionRef.current, {
-					scale: 0.94,
-					yPercent: -7,
-					opacity: 0.16,
-					transformOrigin: "center top",
-					ease: "none",
-				});
-		}, sectionRef);
-
-		return () => ctx.revert();
-	}, [sectionRef]);
 }

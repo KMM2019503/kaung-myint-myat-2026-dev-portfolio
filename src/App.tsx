@@ -1,7 +1,9 @@
 import { Box } from "@chakra-ui/react";
+import Experience from "@/components/sections/Experience";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
 import Navbar from "@/components/ui/Navbar";
+import { sectionAmbientBackground } from "@/theme/backgrounds";
 
 function App() {
 	return (
@@ -17,17 +19,14 @@ function App() {
 				inset="0"
 				pointerEvents="none"
 				css={{
-					background: `
-						radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--color-primary-200) 48%, transparent) 0%, transparent 42%),
-						radial-gradient(circle at 85% 18%, color-mix(in srgb, var(--color-primary-100) 54%, transparent) 0%, transparent 35%),
-						var(--color-bg-primary)
-					`,
+					background: sectionAmbientBackground,
 				}}
 			/>
 			<Navbar />
 
 			<Box as="main" position="relative" zIndex="1">
 				<Hero />
+				<Experience />
 				<FeaturedProjects />
 			</Box>
 		</Box>

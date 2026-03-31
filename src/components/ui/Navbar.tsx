@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton, Link } from "@chakra-ui/react";
 import type { LucideIcon } from "lucide-react";
-import { FolderOpen, Home, Moon, Sun } from "lucide-react";
+import { Briefcase, FolderOpen, Home, Moon, Sun } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -12,6 +12,7 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
 	{ label: "Home", href: "#home", icon: Home },
+	{ label: "Experience", href: "#experience", icon: Briefcase },
 	{ label: "Projects", href: "#projects", icon: FolderOpen },
 ];
 

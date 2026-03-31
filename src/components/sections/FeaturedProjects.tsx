@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { sectionAmbientBackground } from "@/theme/backgrounds";
 import { HeroSnapshotCard } from "./hero/HeroSnapshotCard";
 import { useHeroTyping } from "./hero/useHeroTyping";
 
@@ -211,43 +212,8 @@ export function FeaturedProjects() {
 			};
 
 			if (overlayRef.current) {
-				gsap.fromTo(
-					overlayRef.current,
-					{ opacity: 0 },
-					{
-						opacity: 1,
-						ease: "none",
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: "top bottom",
-							end: "top top",
-							scrub: true,
-						},
-					},
-				);
+				gsap.set(overlayRef.current, { opacity: 1 });
 			}
-
-			gsap.fromTo(
-				trackRef.current,
-				{
-					yPercent: 12,
-					scale: 0.975,
-					opacity: 0.6,
-					transformOrigin: "center top",
-				},
-				{
-					yPercent: 0,
-					scale: 1,
-					opacity: 1,
-					ease: "none",
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: "top bottom",
-						end: "top top",
-						scrub: true,
-					},
-				},
-			);
 
 			const localPinTrigger = ScrollTrigger.create({
 				trigger: sectionRef.current,
@@ -392,12 +358,7 @@ export function FeaturedProjects() {
 				pointerEvents="none"
 				zIndex={0}
 				css={{
-					background: `
-						linear-gradient(110deg, color-mix(in srgb, var(--color-primary-950) 84%, transparent) 8%, color-mix(in srgb, var(--color-primary-700) 55%, transparent) 46%, color-mix(in srgb, var(--color-primary-900) 90%, transparent) 100%),
-						radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--color-primary-300) 24%, transparent) 0%, transparent 42%),
-						radial-gradient(circle at 86% 78%, color-mix(in srgb, var(--color-primary-200) 18%, transparent) 0%, transparent 44%),
-						var(--color-bg-primary)
-					`,
+					background: sectionAmbientBackground,
 				}}
 			/>
 
