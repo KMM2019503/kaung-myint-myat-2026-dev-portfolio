@@ -1,7 +1,6 @@
 import { Box, Container, Grid } from "@chakra-ui/react";
 import { useRef } from "react";
 import { HeroArtStage } from "./hero/HeroArtStage";
-import { HeroBackground } from "./hero/HeroBackground";
 import { HeroInfoBlock } from "./hero/HeroInfoBlock";
 import { HeroSupportBlock } from "./hero/HeroSupportBlock";
 import { useHeroAnimations } from "./hero/useHeroAnimations";
@@ -35,8 +34,6 @@ export function Hero() {
 			justifyContent="center"
 			scrollMarginTop="120px"
 		>
-			<HeroBackground />
-
 			<Container
 				maxW="7xl"
 				w="full"

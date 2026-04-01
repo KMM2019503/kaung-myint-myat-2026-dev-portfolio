@@ -2,8 +2,8 @@ import { Box } from "@chakra-ui/react";
 import Experience from "@/components/sections/Experience";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 import Navbar from "@/components/ui/Navbar";
-import { sectionAmbientBackground } from "@/theme/backgrounds";
 
 function App() {
 	return (
@@ -14,14 +14,7 @@ function App() {
 			color="var(--color-text-primary)"
 			overflowX="clip"
 		>
-			<Box
-				position="absolute"
-				inset="0"
-				pointerEvents="none"
-				css={{
-					background: sectionAmbientBackground,
-				}}
-			/>
+			<AmbientBackground />
 			<Navbar />
 
 			<Box as="main" position="relative" zIndex="1">

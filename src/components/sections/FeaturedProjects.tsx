@@ -1,7 +1,6 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { sectionAmbientBackground } from "@/theme/backgrounds";
 import { HeroSnapshotCard } from "./hero/HeroSnapshotCard";
 import { useHeroTyping } from "./hero/useHeroTyping";
 
@@ -115,7 +114,6 @@ function toRomanNumeral(value: number) {
 
 export function FeaturedProjects() {
 	const sectionRef = useRef<HTMLDivElement>(null);
-	const overlayRef = useRef<HTMLDivElement>(null);
 	const trackRef = useRef<HTMLDivElement>(null);
 	const progressRailRef = useRef<HTMLDivElement>(null);
 	const progressThumbRef = useRef<HTMLDivElement>(null);
@@ -177,9 +175,6 @@ export function FeaturedProjects() {
 		};
 
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-			if (overlayRef.current) {
-				overlayRef.current.style.opacity = "1";
-			}
 			return;
 		}
 
@@ -210,10 +205,6 @@ export function FeaturedProjects() {
 					setActiveSlideIndex(nextActiveIndex);
 				}
 			};
-
-			if (overlayRef.current) {
-				gsap.set(overlayRef.current, { opacity: 1 });
-			}
 
 			const localPinTrigger = ScrollTrigger.create({
 				trigger: sectionRef.current,
@@ -350,18 +341,6 @@ export function FeaturedProjects() {
 			touchAction={{ base: "pan-y", md: "auto" }}
 			scrollMarginTop="30px"
 		>
-			<Box
-				ref={overlayRef}
-				position="absolute"
-				inset="0"
-				opacity={0}
-				pointerEvents="none"
-				zIndex={0}
-				css={{
-					background: sectionAmbientBackground,
-				}}
-			/>
-
 			<Flex
 				ref={trackRef}
 				position="relative"

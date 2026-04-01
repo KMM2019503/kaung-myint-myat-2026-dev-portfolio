@@ -1,7 +1,6 @@
 import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { sectionAmbientBackground } from "@/theme/backgrounds";
 
 interface ExperienceItem {
 	id: string;
@@ -112,7 +111,6 @@ export function Experience() {
 				const drawState = { progress: 0 };
 				let cssWidth = 0;
 				let cssHeight = 0;
-				let pathLength = 0;
 
 				const cubicPoint = (t: number, [p0, p1, p2, p3]: CubicSegment): Point => {
 					const inverse = 1 - t;
@@ -157,13 +155,22 @@ export function Experience() {
 						Boolean(firstDot && middleDot && lastDot) && (lastDot?.y ?? 0) - (firstDot?.y ?? 0) > 8;
 
 					const topPoint: Point = hasUsableAnchors
-						? { x: centerX, y: clamp(firstDot?.y ?? 0, 0, height) }
+						? {
+								x: clamp(firstDot?.x ?? centerX, 0, width),
+								y: clamp(firstDot?.y ?? 0, 0, height),
+							}
 						: { x: centerX, y: height * 0.03 };
 					const middlePoint: Point = hasUsableAnchors
-						? { x: centerX, y: clamp(middleDot?.y ?? 0, 0, height) }
+						? {
+								x: clamp(middleDot?.x ?? centerX, 0, width),
+								y: clamp(middleDot?.y ?? 0, 0, height),
+							}
 						: { x: centerX, y: height * 0.5 };
 					const bottomPoint: Point = hasUsableAnchors
-						? { x: centerX, y: clamp(lastDot?.y ?? 0, 0, height) }
+						? {
+								x: clamp(lastDot?.x ?? centerX, 0, width),
+								y: clamp(lastDot?.y ?? 0, 0, height),
+							}
 						: { x: centerX, y: height * 0.97 };
 
 					const upperSpan = Math.max(36, middlePoint.y - topPoint.y);
@@ -173,13 +180,13 @@ export function Experience() {
 						[
 							topPoint,
 							{ x: centerX, y: topPoint.y + upperSpan * 0.34 },
-							{ x: centerX + amplitude, y: topPoint.y + upperSpan * 0.66 },
+							{ x: middlePoint.x + amplitude, y: topPoint.y + upperSpan * 0.66 },
 							middlePoint,
 						],
 						[
 							middlePoint,
-							{ x: centerX - amplitude, y: middlePoint.y + lowerSpan * 0.34 },
-							{ x: centerX, y: middlePoint.y + lowerSpan * 0.66 },
+							{ x: middlePoint.x - amplitude, y: middlePoint.y + lowerSpan * 0.34 },
+							{ x: bottomPoint.x, y: middlePoint.y + lowerSpan * 0.66 },
 							bottomPoint,
 						],
 					];
@@ -227,6 +234,7 @@ export function Experience() {
 						styles.getPropertyValue("--surface-floating-border").trim() ||
 						"rgba(143, 167, 188, 0.45)";
 					const segments = getCurveSegments(cssWidth, cssHeight);
+					const currentPathLength = estimateCurveLength(segments);
 
 					canvasContext.clearRect(0, 0, cssWidth, cssHeight);
 					canvasContext.lineWidth = 3;
@@ -240,8 +248,8 @@ export function Experience() {
 					canvasContext.stroke();
 
 					traceCurve(canvasContext, segments);
-					canvasContext.setLineDash([pathLength, pathLength]);
-					canvasContext.lineDashOffset = pathLength * (1 - drawState.progress);
+					canvasContext.setLineDash([currentPathLength, currentPathLength]);
+					canvasContext.lineDashOffset = currentPathLength * (1 - drawState.progress);
 					canvasContext.strokeStyle = progressColor;
 					canvasContext.shadowColor = progressColor;
 					canvasContext.shadowBlur = 8;
@@ -260,8 +268,6 @@ export function Experience() {
 					canvas.width = Math.max(1, Math.floor(cssWidth * dpr));
 					canvas.height = Math.max(1, Math.floor(cssHeight * dpr));
 					canvasContext.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-					pathLength = estimateCurveLength(getCurveSegments(cssWidth, cssHeight));
 					drawCurve();
 				};
 
@@ -337,15 +343,6 @@ export function Experience() {
 			py={{ base: 12, md: 18 }}
 			minH="var(--viewport-height-dynamic)"
 		>
-			<Box
-				position="absolute"
-				inset="0"
-				pointerEvents="none"
-				css={{
-					background: sectionAmbientBackground,
-				}}
-			/>
-
 			<Container
 				maxW="7xl"
 				w="full"
