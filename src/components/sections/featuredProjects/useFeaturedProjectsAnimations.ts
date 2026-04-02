@@ -30,8 +30,10 @@ export function useFeaturedProjectsAnimations({
 
 		const ctx = gsap.context(() => {
 			const panels = gsap.utils.toArray<HTMLElement>("[data-project-panel]");
+			let horizontalTween: gsap.core.Tween | null = null;
+
 			if (panels.length > 1) {
-				gsap.to(trackRef.current, {
+				horizontalTween = gsap.to(trackRef.current, {
 					xPercent: -100 * (panels.length - 1),
 					ease: "none",
 					scrollTrigger: {
@@ -104,6 +106,60 @@ export function useFeaturedProjectsAnimations({
 					},
 					"-=0.46",
 				);
+
+				const firstProjectPanel = sectionRef.current?.querySelector<HTMLElement>(
+					"[data-project-case-panel]",
+				);
+
+				if (firstProjectPanel) {
+					const projectPanelTimeline = gsap.timeline({
+						scrollTrigger: horizontalTween
+							? {
+									trigger: firstProjectPanel,
+									containerAnimation: horizontalTween,
+									start: "left 72%",
+									once: true,
+								}
+							: {
+									trigger: firstProjectPanel,
+									start: "top 72%",
+									once: true,
+								},
+					});
+
+					projectPanelTimeline.from("[data-project-case-shell]", {
+						x: 64,
+						y: 26,
+						opacity: 0,
+						scale: 0.98,
+						duration: 0.86,
+						ease: "power3.out",
+					});
+
+					projectPanelTimeline.from(
+						"[data-project-case-eyebrow], [data-project-case-title], [data-project-case-summary]",
+						{
+							y: 24,
+							opacity: 0,
+							stagger: 0.12,
+							duration: 0.64,
+							ease: "power3.out",
+						},
+						"-=0.46",
+					);
+
+					projectPanelTimeline.from(
+						"[data-project-case-metric], [data-project-case-module], [data-project-case-highlight], [data-project-case-scope-label], [data-project-case-impact-label]",
+						{
+							y: 18,
+							opacity: 0,
+							stagger: 0.04,
+							duration: 0.5,
+							ease: "power2.out",
+						},
+						"-=0.4",
+					);
+				}
 			}
 		}, sectionRef);
 

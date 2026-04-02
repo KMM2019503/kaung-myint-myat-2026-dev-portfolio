@@ -5,6 +5,7 @@ import {
 	projectIntroCodeLines,
 	projectPlaceholders,
 } from "./featuredProjects/featuredProjects.constants";
+import { ProjectCaseStudyPanel } from "./featuredProjects/ProjectCaseStudyPanel";
 import { ProjectIntroPanel } from "./featuredProjects/ProjectIntroPanel";
 import { ProjectPlaceholderPanel } from "./featuredProjects/ProjectPlaceholderPanel";
 import { useFeaturedProjectsAnimations } from "./featuredProjects/useFeaturedProjectsAnimations";
@@ -58,6 +59,7 @@ export function FeaturedProjects() {
 					typedCodeLines={typedCodeLines}
 					activeTypingLine={activeTypingLine}
 				/>
+				<ProjectCaseStudyPanel />
 
 				{projectPlaceholders.map((panel) => (
 					<ProjectPlaceholderPanel key={panel.id} panel={panel} />
