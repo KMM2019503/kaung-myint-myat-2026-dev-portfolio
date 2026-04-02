@@ -1,33 +1,29 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import type { RefObject } from "react";
 import { TechnicalCodeBlock } from "@/components/ui/TechnicalCodeBlock";
-import { codeLines, floatingChips, inCardBadges, inCardBadgeTickerItems } from "./Hero.constants";
+import {
+	introFloatingChips,
+	projectIntroCodeLines,
+	projectTechBadgeTickerItems,
+} from "./featuredProjects.constants";
 
-interface HeroSnapshotCardProps {
-	visualRef: RefObject<HTMLDivElement | null>;
+interface FeaturedProjectsIntroCardProps {
+	cardRef: RefObject<HTMLDivElement | null>;
 	chipLayerRef: RefObject<HTMLDivElement | null>;
-	inCardBadgeTickerRef: RefObject<HTMLDivElement | null>;
-	typedCodeLines: string[];
+	badgeTickerRef: RefObject<HTMLDivElement | null>;
+	typedCodeLines: readonly string[];
 	activeTypingLine: number | null;
 }
 
-export function HeroSnapshotCard({
-	visualRef,
+export function FeaturedProjectsIntroCard({
+	cardRef,
 	chipLayerRef,
-	inCardBadgeTickerRef,
+	badgeTickerRef,
 	typedCodeLines,
 	activeTypingLine,
-}: HeroSnapshotCardProps) {
+}: FeaturedProjectsIntroCardProps) {
 	return (
-		<Box
-			order={{ base: 3, xl: 3 }}
-			w="full"
-			minW="0"
-			maxW={{ xl: "540px" }}
-			ref={visualRef}
-			position="relative"
-			justifySelf={{ xl: "end" }}
-		>
+		<Box data-project-intro-card ref={cardRef} position="relative" minW="0">
 			<Box
 				w="full"
 				p={{ base: 5, md: 6 }}
@@ -41,7 +37,6 @@ export function HeroSnapshotCard({
 				}}
 			>
 				<Flex
-					justify="space-between"
 					align={{ base: "flex-start", md: "center" }}
 					mb={{ base: 4, md: 5 }}
 					flexWrap="wrap"
@@ -56,22 +51,10 @@ export function HeroSnapshotCard({
 					>
 						Technical Snapshot
 					</Text>
-					<Box
-						px={{ base: 3, md: 4 }}
-						py={{ base: "1.5", md: "2" }}
-						borderRadius="full"
-						bg="color-mix(in srgb, var(--color-bg-primary) 80%, transparent)"
-						color="var(--color-text-accent-strong)"
-						fontSize={{ base: "xs", md: "sm" }}
-						fontWeight="700"
-						boxShadow="0 20px 30px -22px color-mix(in srgb, var(--color-accent) 84%, transparent)"
-					>
-						Frontend & Mobile Focus
-					</Box>
 				</Flex>
 
 				<TechnicalCodeBlock
-					lines={codeLines}
+					lines={projectIntroCodeLines}
 					typedLines={typedCodeLines}
 					activeLineIndex={activeTypingLine}
 				/>
@@ -87,42 +70,15 @@ export function HeroSnapshotCard({
 							"linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%)",
 					}}
 				>
-					<Flex display={{ base: "flex", md: "none" }} flexWrap="wrap" gap="2">
-						{inCardBadges.map((tag) => (
-							<Flex
-								key={tag}
-								align="center"
-								gap="1.5"
-								px="3"
-								py="1.5"
-								borderRadius="full"
-								fontSize="xs"
-								fontWeight="600"
-								bg="var(--color-bg-secondary)"
-								color="var(--color-text-secondary)"
-							>
-								<Box
-									w="6px"
-									h="6px"
-									borderRadius="full"
-									bg="var(--color-primary-500)"
-									opacity="0.82"
-								/>
-								{tag}
-							</Flex>
-						))}
-					</Flex>
-
 					<Flex
-						ref={inCardBadgeTickerRef}
-						display={{ base: "none", md: "inline-flex" }}
+						ref={badgeTickerRef}
 						align="center"
 						gap={{ base: "1.5", md: "2" }}
 						w="max-content"
 						pr={{ base: "1.5", md: "2" }}
 						css={{ willChange: "transform" }}
 					>
-						{inCardBadgeTickerItems.map((item) => (
+						{projectTechBadgeTickerItems.map((item) => (
 							<Flex
 								key={item.key}
 								align="center"
@@ -151,11 +107,9 @@ export function HeroSnapshotCard({
 			</Box>
 
 			<Box ref={chipLayerRef} position="absolute" inset="0" pointerEvents="none" display="block">
-				{floatingChips.map((chip) => (
+				{introFloatingChips.map((chip) => (
 					<Box
 						key={chip.id}
-						data-float-chip="true"
-						display={{ base: chip.showOnMobile ? "block" : "none", md: "block" }}
 						position="absolute"
 						top={chip.top}
 						left={chip.left}
@@ -177,24 +131,6 @@ export function HeroSnapshotCard({
 						{chip.label}
 					</Box>
 				))}
-			</Box>
-
-			<Box
-				data-orbit="true"
-				display={{ base: "none", md: "inline-flex" }}
-				position="absolute"
-				bottom={{ base: "-14px", md: "-18px" }}
-				right={{ base: "16px", md: "24px" }}
-				px={{ base: "4", md: "5" }}
-				py={{ base: "2.5", md: "3" }}
-				borderRadius="2xl"
-				bg="var(--color-accent)"
-				color="white"
-				fontSize={{ base: "sm", md: "md" }}
-				fontWeight="700"
-				boxShadow="0 20px 30px -20px color-mix(in srgb, var(--color-accent) 84%, transparent)"
-			>
-				Ship fast, scale clean.
 			</Box>
 		</Box>
 	);

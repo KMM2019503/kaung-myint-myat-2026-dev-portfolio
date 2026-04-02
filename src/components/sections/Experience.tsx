@@ -1,6 +1,11 @@
 import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import {
+	SECTION_CONTAINER_PROPS,
+	SECTION_SCROLL_MARGIN_TOP,
+	SECTION_VERTICAL_PADDING,
+} from "@/theme/sectionLayout";
 
 interface ExperienceItem {
 	id: string;
@@ -339,18 +344,11 @@ export function Experience() {
 			position="relative"
 			zIndex={1}
 			overflow="hidden"
-			scrollMarginTop="110px"
-			py={{ base: 12, md: 18 }}
+			scrollMarginTop={SECTION_SCROLL_MARGIN_TOP}
+			py={SECTION_VERTICAL_PADDING}
 			minH="var(--viewport-height-dynamic)"
 		>
-			<Container
-				maxW="7xl"
-				w="full"
-				mx="auto"
-				px={{ base: 5, md: 8, lg: 10 }}
-				position="relative"
-				zIndex={1}
-			>
+			<Container {...SECTION_CONTAINER_PROPS} position="relative" zIndex={1}>
 				<Flex direction="column" gap={{ base: 8, md: 10 }}>
 					<Box
 						maxW={{ base: "2xl", lg: "3xl" }}

@@ -1,5 +1,6 @@
 import { Box, Container, Grid } from "@chakra-ui/react";
 import { useRef } from "react";
+import { SECTION_CONTAINER_PROPS, SECTION_SCROLL_MARGIN_TOP } from "@/theme/sectionLayout";
 import { HeroArtStage } from "./hero/HeroArtStage";
 import { HeroInfoBlock } from "./hero/HeroInfoBlock";
 import { HeroSupportBlock } from "./hero/HeroSupportBlock";
@@ -32,13 +33,10 @@ export function Hero() {
 			display="flex"
 			alignItems="center"
 			justifyContent="center"
-			scrollMarginTop="120px"
+			scrollMarginTop={SECTION_SCROLL_MARGIN_TOP}
 		>
 			<Container
-				maxW="7xl"
-				w="full"
-				mx="auto"
-				px={{ base: 5, md: 8, lg: 10 }}
+				{...SECTION_CONTAINER_PROPS}
 				position="relative"
 				zIndex="1"
 				pt={{ base: "88px", md: "118px" }}
