@@ -14,7 +14,12 @@ function App() {
 			color="var(--color-text-primary)"
 			overflowX="clip"
 		>
-			<AmbientBackground />
+			<AmbientBackground
+				lightOpacityMultiplier={1.8}
+				darkOpacityMultiplier={0.55}
+				lightOrbOpacityMultipliers={[0.45, 0.55, 0.7, 0.35, 0.3]}
+				darkOrbOpacityMultipliers={[0.3, 0.4, 0.8, 0.2, 0.5]}
+			/>
 			<Navbar />
 
 			<Box as="main" position="relative" zIndex="1">

@@ -16,6 +16,19 @@ interface OrbConfig {
 	colorVar: string;
 }
 
+interface AmbientBackgroundProps {
+	opacityMultiplier?: number;
+	orbOpacityMultipliers?: number[];
+	lightOpacityMultiplier?: number;
+	darkOpacityMultiplier?: number;
+	lightOrbOpacityMultipliers?: number[];
+	darkOrbOpacityMultipliers?: number[];
+}
+
+const EMPTY_OPACITY_MULTIPLIERS: number[] = [];
+const MOBILE_MAX_WIDTH_PX = 767;
+const MOBILE_ORB_INDICES = new Set([1, 2, 3]); // top-right, center, bottom-left
+
 const orbConfigs: OrbConfig[] = [
 	{
 		baseX: 0.14,
@@ -27,7 +40,7 @@ const orbConfigs: OrbConfig[] = [
 		driftY: 0.05,
 		scrollFactor: 0.04,
 		waveX: 0.016,
-		alpha: 0.2,
+		alpha: 0.34,
 		colorVar: "--color-primary-300",
 	},
 	{
@@ -40,7 +53,7 @@ const orbConfigs: OrbConfig[] = [
 		driftY: 0.045,
 		scrollFactor: 0.03,
 		waveX: 0.014,
-		alpha: 0.16,
+		alpha: 0.29,
 		colorVar: "--color-primary-400",
 	},
 	{
@@ -53,21 +66,34 @@ const orbConfigs: OrbConfig[] = [
 		driftY: 0.03,
 		scrollFactor: 0.05,
 		waveX: 0.012,
-		alpha: 0.14,
+		alpha: 0.25,
 		colorVar: "--color-primary-200",
 	},
 	{
 		baseX: 0.22,
 		baseY: 0.82,
-		radius: 0.28,
+		radius: 0.32,
 		speed: 0.19,
 		phase: 3.4,
 		driftX: 0.02,
 		driftY: 0.028,
 		scrollFactor: 0.045,
 		waveX: 0.01,
-		alpha: 0.13,
+		alpha: 0.23,
 		colorVar: "--color-primary-300",
+	},
+	{
+		baseX: 0.9,
+		baseY: 0.88,
+		radius: 0.3,
+		speed: 0.17,
+		phase: 4.25,
+		driftX: 0.022,
+		driftY: 0.03,
+		scrollFactor: 0.038,
+		waveX: 0.012,
+		alpha: 0.28,
+		colorVar: "--color-primary-400",
 	},
 ];
 
@@ -94,7 +120,18 @@ function hexToRgba(hexColor: string, alpha: number) {
 	return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 }
 
-export function AmbientBackground() {
+function clamp01(value: number) {
+	return Math.min(1, Math.max(0, value));
+}
+
+export function AmbientBackground({
+	opacityMultiplier = 1,
+	orbOpacityMultipliers = EMPTY_OPACITY_MULTIPLIERS,
+	lightOpacityMultiplier,
+	darkOpacityMultiplier,
+	lightOrbOpacityMultipliers,
+	darkOrbOpacityMultipliers,
+}: AmbientBackgroundProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
@@ -117,6 +154,7 @@ export function AmbientBackground() {
 		let width = 0;
 		let height = 0;
 		let scrollY = window.scrollY;
+		let isMobileViewport = window.innerWidth <= MOBILE_MAX_WIDTH_PX;
 
 		const readColor = (token: string, fallback: string) => {
 			const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
@@ -132,6 +170,7 @@ export function AmbientBackground() {
 		const resizeCanvas = () => {
 			const dpr = window.devicePixelRatio || 1;
 			const rect = canvas.getBoundingClientRect();
+			isMobileViewport = window.innerWidth <= MOBILE_MAX_WIDTH_PX;
 
 			width = Math.max(1, rect.width);
 			height = Math.max(1, rect.height);
@@ -145,8 +184,19 @@ export function AmbientBackground() {
 		const drawFrame = (timeMs: number) => {
 			const time = timeMs / 1000;
 			context.clearRect(0, 0, width, height);
+			const isDarkMode = document.documentElement.classList.contains("dark");
+			const activeOpacityMultiplier = isDarkMode
+				? (darkOpacityMultiplier ?? opacityMultiplier)
+				: (lightOpacityMultiplier ?? opacityMultiplier);
+			const activeOrbOpacityMultipliers = isDarkMode
+				? (darkOrbOpacityMultipliers ?? orbOpacityMultipliers)
+				: (lightOrbOpacityMultipliers ?? orbOpacityMultipliers);
 
-			for (const orb of orbConfigs) {
+			for (const [index, orb] of orbConfigs.entries()) {
+				if (isMobileViewport && !MOBILE_ORB_INDICES.has(index)) {
+					continue;
+				}
+
 				const wave = Math.sin(scrollY * 0.0022 + time * orb.speed + orb.phase) * width * orb.waveX;
 				const x =
 					width * orb.baseX + Math.sin(time * orb.speed + orb.phase) * width * orb.driftX + wave;
@@ -157,15 +207,32 @@ export function AmbientBackground() {
 				const radius = Math.max(width, height) * orb.radius;
 				const color =
 					palette[orb.colorVar as keyof typeof palette] ?? palette["--color-primary-300"];
+				const perOrbMultiplier = activeOrbOpacityMultipliers[index] ?? 1;
+				const finalAlpha = clamp01(orb.alpha * activeOpacityMultiplier * perOrbMultiplier);
+				const coreAlpha = Math.min(finalAlpha * 1.2, 0.58);
+				const midAlpha = Math.min(finalAlpha * 0.85, 0.42);
+				const outerAlpha = Math.min(finalAlpha * 0.35, 0.18);
 
 				const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-				gradient.addColorStop(0, hexToRgba(color, orb.alpha));
-				gradient.addColorStop(0.45, hexToRgba(color, orb.alpha * 0.42));
+				gradient.addColorStop(0, hexToRgba(color, coreAlpha));
+				gradient.addColorStop(0.35, hexToRgba(color, midAlpha));
+				gradient.addColorStop(0.75, hexToRgba(color, outerAlpha));
 				gradient.addColorStop(1, hexToRgba(color, 0));
 
 				context.fillStyle = gradient;
 				context.beginPath();
 				context.arc(x, y, radius, 0, Math.PI * 2);
+				context.fill();
+
+				context.strokeStyle = hexToRgba(color, Math.min(finalAlpha * 1.05, 0.34));
+				context.lineWidth = Math.max(1.25, radius * 0.0032);
+				context.beginPath();
+				context.arc(x, y, radius * 0.74, 0, Math.PI * 2);
+				context.stroke();
+
+				context.fillStyle = hexToRgba(color, Math.min(finalAlpha * 1.45, 0.48));
+				context.beginPath();
+				context.arc(x, y, Math.max(4, radius * 0.028), 0, Math.PI * 2);
 				context.fill();
 			}
 
@@ -186,7 +253,14 @@ export function AmbientBackground() {
 			window.removeEventListener("resize", resizeCanvas);
 			window.removeEventListener("scroll", handleScroll);
 		};
-	}, []);
+	}, [
+		darkOpacityMultiplier,
+		darkOrbOpacityMultipliers,
+		lightOpacityMultiplier,
+		lightOrbOpacityMultipliers,
+		opacityMultiplier,
+		orbOpacityMultipliers,
+	]);
 
 	return (
 		<Box
