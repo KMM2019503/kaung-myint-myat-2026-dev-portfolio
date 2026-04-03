@@ -16,6 +16,9 @@ const navLinks: NavLink[] = [
 	{ label: "Projects", href: "#projects", icon: FolderOpen },
 ];
 
+const NAV_SCROLL_DELTA_THRESHOLD = 6;
+const NAV_REVEAL_SCROLL_UP_DISTANCE = 180;
+
 export function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isInitialVisible, setIsInitialVisible] = useState(false);
@@ -23,6 +26,7 @@ export function Navbar() {
 	const [activeSection, setActiveSection] = useState("#home");
 	const navRef = useRef<HTMLDivElement>(null);
 	const lastScrollYRef = useRef(0);
+	const upwardScrollDistanceRef = useRef(0);
 	const scrollRafRef = useRef<number | null>(null);
 	const { theme, toggleTheme } = useTheme();
 
@@ -59,9 +63,18 @@ export function Navbar() {
 			setIsScrolled(currentScrollY > 16);
 
 			if (isNearTop) {
+				upwardScrollDistanceRef.current = 0;
 				setIsNavVisible(true);
-			} else if (Math.abs(scrollDelta) > 6) {
-				setIsNavVisible(scrollDelta < 0);
+			} else if (scrollDelta > NAV_SCROLL_DELTA_THRESHOLD) {
+				upwardScrollDistanceRef.current = 0;
+				setIsNavVisible(false);
+			} else if (scrollDelta < -NAV_SCROLL_DELTA_THRESHOLD) {
+				upwardScrollDistanceRef.current += Math.abs(scrollDelta);
+
+				if (upwardScrollDistanceRef.current >= NAV_REVEAL_SCROLL_UP_DISTANCE) {
+					upwardScrollDistanceRef.current = 0;
+					setIsNavVisible(true);
+				}
 			}
 
 			lastScrollYRef.current = currentScrollY;
