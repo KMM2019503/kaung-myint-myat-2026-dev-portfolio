@@ -1,9 +1,8 @@
 export const projectIntroCodeLines = [
-	"const hrAppScaleSnapshot = {",
-	"  platform: 'React Native + EAS Update',",
-	"  dailyActiveUsers: 50000,",
-	"  modulesOwned: ['Onboarding', 'Leave', 'KPI', 'Payslip'],",
-	"  focus: ['reliable', 'maintainable'],",
+	"interface Product = {",
+	"  performance: 'optimized',",
+	"  accessibility: true,",
+	"  interactionDesign: 'international',",
 	"};",
 ] as const;
 

@@ -149,6 +149,18 @@ export function useFeaturedProjectsAnimations({
 					);
 
 					projectPanelTimeline.from(
+						"[data-project-case-metric-stack]",
+						{
+							x: 24,
+							y: 16,
+							opacity: 0,
+							duration: 0.62,
+							ease: "power3.out",
+						},
+						"-=0.44",
+					);
+
+					projectPanelTimeline.from(
 						"[data-project-case-metric], [data-project-case-module], [data-project-case-highlight], [data-project-case-scope-label], [data-project-case-impact-label]",
 						{
 							y: 18,
