@@ -107,27 +107,26 @@ export function useFeaturedProjectsAnimations({
 					"-=0.46",
 				);
 
-				const firstProjectPanel = sectionRef.current?.querySelector<HTMLElement>(
-					"[data-project-case-panel]",
-				);
+				const projectCasePanels = gsap.utils.toArray<HTMLElement>("[data-project-case-panel]");
 
-				if (firstProjectPanel) {
+				projectCasePanels.forEach((projectCasePanel) => {
+					const selectInPanel = gsap.utils.selector(projectCasePanel);
 					const projectPanelTimeline = gsap.timeline({
 						scrollTrigger: horizontalTween
 							? {
-									trigger: firstProjectPanel,
+									trigger: projectCasePanel,
 									containerAnimation: horizontalTween,
 									start: "left 72%",
 									once: true,
 								}
 							: {
-									trigger: firstProjectPanel,
+									trigger: projectCasePanel,
 									start: "top 72%",
 									once: true,
 								},
 					});
 
-					projectPanelTimeline.from("[data-project-case-shell]", {
+					projectPanelTimeline.from(selectInPanel("[data-project-case-shell]"), {
 						x: 64,
 						y: 26,
 						opacity: 0,
@@ -137,7 +136,9 @@ export function useFeaturedProjectsAnimations({
 					});
 
 					projectPanelTimeline.from(
-						"[data-project-case-eyebrow], [data-project-case-title], [data-project-case-summary]",
+						selectInPanel(
+							"[data-project-case-eyebrow], [data-project-case-title], [data-project-case-summary]",
+						),
 						{
 							y: 24,
 							opacity: 0,
@@ -149,7 +150,7 @@ export function useFeaturedProjectsAnimations({
 					);
 
 					projectPanelTimeline.from(
-						"[data-project-case-metric-stack]",
+						selectInPanel("[data-project-case-metric-stack]"),
 						{
 							x: 24,
 							y: 16,
@@ -161,7 +162,9 @@ export function useFeaturedProjectsAnimations({
 					);
 
 					projectPanelTimeline.from(
-						"[data-project-case-metric], [data-project-case-module], [data-project-case-highlight], [data-project-case-scope-label], [data-project-case-impact-label]",
+						selectInPanel(
+							"[data-project-case-metric], [data-project-case-module], [data-project-case-highlight], [data-project-case-scope-label], [data-project-case-impact-label]",
+						),
 						{
 							y: 18,
 							opacity: 0,
@@ -171,73 +174,7 @@ export function useFeaturedProjectsAnimations({
 						},
 						"-=0.4",
 					);
-				}
-
-				const secondProjectPanel = sectionRef.current?.querySelector<HTMLElement>(
-					"[data-project-case-two-panel]",
-				);
-
-				if (secondProjectPanel) {
-					const secondProjectTimeline = gsap.timeline({
-						scrollTrigger: horizontalTween
-							? {
-									trigger: secondProjectPanel,
-									containerAnimation: horizontalTween,
-									start: "left 72%",
-									once: true,
-								}
-							: {
-									trigger: secondProjectPanel,
-									start: "top 72%",
-									once: true,
-								},
-					});
-
-					secondProjectTimeline.from("[data-project-case-two-shell]", {
-						x: 64,
-						y: 26,
-						opacity: 0,
-						scale: 0.98,
-						duration: 0.86,
-						ease: "power3.out",
-					});
-
-					secondProjectTimeline.from(
-						"[data-project-case-two-eyebrow], [data-project-case-two-title], [data-project-case-two-summary]",
-						{
-							y: 24,
-							opacity: 0,
-							stagger: 0.12,
-							duration: 0.64,
-							ease: "power3.out",
-						},
-						"-=0.46",
-					);
-
-					secondProjectTimeline.from(
-						"[data-project-case-two-metric-stack]",
-						{
-							x: 24,
-							y: 16,
-							opacity: 0,
-							duration: 0.62,
-							ease: "power3.out",
-						},
-						"-=0.44",
-					);
-
-					secondProjectTimeline.from(
-						"[data-project-case-two-metric], [data-project-case-two-module], [data-project-case-two-highlight], [data-project-case-two-scope-label], [data-project-case-two-impact-label]",
-						{
-							y: 18,
-							opacity: 0,
-							stagger: 0.04,
-							duration: 0.5,
-							ease: "power2.out",
-						},
-						"-=0.4",
-					);
-				}
+				});
 			}
 		}, sectionRef);
 

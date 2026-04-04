@@ -2,13 +2,13 @@ import { Box } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { SECTION_SCROLL_MARGIN_TOP } from "@/theme/sectionLayout";
 import {
+	projectCaseStudies,
 	projectIntroCodeLines,
 	projectPlaceholders,
 } from "./featuredProjects/featuredProjects.constants";
 import { ProjectCaseStudyPanel } from "./featuredProjects/ProjectCaseStudyPanel";
 import { ProjectIntroPanel } from "./featuredProjects/ProjectIntroPanel";
 import { ProjectPlaceholderPanel } from "./featuredProjects/ProjectPlaceholderPanel";
-import { SecondProjectCaseStudyPanel } from "./featuredProjects/SecondProjectCaseStudyPanel";
 import { useFeaturedProjectsAnimations } from "./featuredProjects/useFeaturedProjectsAnimations";
 import { useProjectIntroTyping } from "./featuredProjects/useProjectIntroTyping";
 
@@ -60,8 +60,9 @@ export function FeaturedProjects() {
 					typedCodeLines={typedCodeLines}
 					activeTypingLine={activeTypingLine}
 				/>
-				<ProjectCaseStudyPanel />
-				<SecondProjectCaseStudyPanel />
+				{projectCaseStudies.map((project) => (
+					<ProjectCaseStudyPanel key={project.id} project={project} />
+				))}
 
 				{projectPlaceholders.map((panel) => (
 					<ProjectPlaceholderPanel key={panel.id} panel={panel} />

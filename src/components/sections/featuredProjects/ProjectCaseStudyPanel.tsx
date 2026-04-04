@@ -1,46 +1,21 @@
 import { Box, Container, Flex, Grid, Heading, Text } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { SECTION_CONTAINER_PROPS, SECTION_VERTICAL_PADDING } from "@/theme/sectionLayout";
-import {
-	firstProjectHighlights,
-	firstProjectMetrics,
-	firstProjectModules,
-} from "./featuredProjects.constants";
+import type { ProjectCaseStudyData } from "./featuredProjects.constants";
+import { METRIC_CARD_TRANSITION_DURATION_MS, ProjectMetricStack } from "./ProjectMetricStack";
 
 const METRIC_ROTATE_INTERVAL_MS = 3400;
-const METRIC_CARD_TRANSITION_DURATION_MS = 560;
 
-const metricCardSwipeOut = keyframes`
-	0% {
-		transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-		opacity: 1;
-		filter: blur(0px);
-	}
-	100% {
-		transform: translate3d(-58%, -14%, 0) rotate(-7deg) scale(0.92);
-		opacity: 0;
-		filter: blur(1.8px);
-	}
-`;
+interface ProjectCaseStudyPanelProps {
+	project: ProjectCaseStudyData;
+}
 
-const metricCardSwipeIn = keyframes`
-	0% {
-		transform: translate3d(56%, 16%, 0) rotate(8deg) scale(0.94);
-		opacity: 0;
-		filter: blur(2px);
-	}
-	100% {
-		transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-		opacity: 1;
-		filter: blur(0px);
-	}
-`;
-
-export function ProjectCaseStudyPanel() {
+export function ProjectCaseStudyPanel({ project }: ProjectCaseStudyPanelProps) {
 	const [activeMetricIndex, setActiveMetricIndex] = useState(0);
 	const [incomingMetricIndex, setIncomingMetricIndex] = useState<number | null>(null);
 	const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+	const metrics = project.metrics;
 
 	useEffect(() => {
 		const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -60,16 +35,16 @@ export function ProjectCaseStudyPanel() {
 	}, []);
 
 	useEffect(() => {
-		if (prefersReducedMotion || incomingMetricIndex !== null || firstProjectMetrics.length < 2) {
+		if (prefersReducedMotion || incomingMetricIndex !== null || metrics.length < 2) {
 			return;
 		}
 
 		const rotateTimer = window.setTimeout(() => {
-			setIncomingMetricIndex((activeMetricIndex + 1) % firstProjectMetrics.length);
+			setIncomingMetricIndex((activeMetricIndex + 1) % metrics.length);
 		}, METRIC_ROTATE_INTERVAL_MS);
 
 		return () => window.clearTimeout(rotateTimer);
-	}, [activeMetricIndex, incomingMetricIndex, prefersReducedMotion]);
+	}, [activeMetricIndex, incomingMetricIndex, metrics.length, prefersReducedMotion]);
 
 	useEffect(() => {
 		if (incomingMetricIndex === null) {
@@ -84,19 +59,19 @@ export function ProjectCaseStudyPanel() {
 		return () => window.clearTimeout(settleTimer);
 	}, [incomingMetricIndex]);
 
-	const activeMetric = firstProjectMetrics[activeMetricIndex];
-	const incomingMetric =
-		incomingMetricIndex === null ? null : firstProjectMetrics[incomingMetricIndex];
-	const activeMetricOrder = `${String(activeMetricIndex + 1).padStart(2, "0")} / ${String(firstProjectMetrics.length).padStart(2, "0")}`;
+	const activeMetric = metrics[activeMetricIndex];
+	const incomingMetric = incomingMetricIndex === null ? null : metrics[incomingMetricIndex];
+	const activeMetricOrder = `${String(activeMetricIndex + 1).padStart(2, "0")} / ${String(metrics.length).padStart(2, "0")}`;
 	const incomingMetricOrder =
 		incomingMetricIndex === null
 			? activeMetricOrder
-			: `${String(incomingMetricIndex + 1).padStart(2, "0")} / ${String(firstProjectMetrics.length).padStart(2, "0")}`;
+			: `${String(incomingMetricIndex + 1).padStart(2, "0")} / ${String(metrics.length).padStart(2, "0")}`;
 
 	return (
 		<Box
 			data-project-panel
 			data-project-case-panel
+			data-project-id={project.id}
 			flex="0 0 100vw"
 			h="var(--viewport-height-dynamic)"
 			display="flex"
@@ -127,7 +102,7 @@ export function ProjectCaseStudyPanel() {
 								textTransform="uppercase"
 								color="var(--color-text-accent)"
 							>
-								Project 01
+								{project.label}
 							</Text>
 							<Heading
 								data-project-case-title
@@ -137,158 +112,32 @@ export function ProjectCaseStudyPanel() {
 								lineHeight={{ base: 1.25, md: 1.2 }}
 								maxW="24ch"
 							>
-								Scaled a React Native HR app to 50K daily active users.
+								{project.title}
 							</Heading>
-							<Text
-								data-project-case-summary
-								mt={{ base: 3.5, md: 4.5 }}
-								fontSize={{ base: "sm", md: "lg" }}
-								lineHeight={{ base: 1.8, md: 1.75 }}
-								color="var(--color-text-secondary)"
-								maxW="72ch"
-							>
-								I led Onboarding, Leave, KPI, Settings, Payslip, Scan & Remote Check In/Out, CV
-								Screening, and Expense while aligning behavior with the legacy Swift and Kotlin
-								apps.
-							</Text>
-						</Box>
-
-						<Box
-							data-project-case-metric-stack
-							position="relative"
-							w="full"
-							maxW={{ base: "full", lg: "sm" }}
-							justifySelf={{ base: "stretch", lg: "end" }}
-							px={{ base: 0, sm: 1, lg: 0 }}
-						>
-							<Text
-								fontSize={{ base: "2xs", md: "xs" }}
-								fontWeight="700"
-								letterSpacing="0.14em"
-								textTransform="uppercase"
-								color="var(--color-text-tertiary)"
-								mb={{ base: 2.5, md: 3 }}
-							>
-								Metric Snapshot
-							</Text>
-							<Box position="relative" h={{ base: "150px", md: "168px" }} w="full">
-								<Box
-									position="absolute"
-									inset="0"
-									borderRadius="2xl"
-									bg="rgba(224, 238, 251, 0.54)"
-									border="1px solid rgba(125, 167, 198, 0.3)"
-									transform="translate3d(16px, 10px, 0)"
-								/>
-								<Box
-									position="absolute"
-									inset="0"
-									borderRadius="2xl"
-									bg="rgba(232, 243, 255, 0.62)"
-									border="1px solid rgba(125, 167, 198, 0.26)"
-									transform="translate3d(8px, 4px, 0)"
-								/>
-								<Box
-									key={activeMetric.id}
-									data-project-case-metric
-									position="absolute"
-									inset="0"
-									p={{ base: 4, md: 5 }}
-									borderRadius="2xl"
-									border="1px solid rgba(125, 167, 198, 0.34)"
-									bg="rgba(240, 248, 255, 0.86)"
-									backdropFilter="blur(10px)"
-									boxShadow="0 16px 30px rgba(19, 52, 90, 0.14)"
-									display="flex"
-									flexDirection="column"
-									justifyContent="space-between"
-									transformOrigin="82% 18%"
-									animation={
-										!prefersReducedMotion && incomingMetric
-											? `${metricCardSwipeOut} ${METRIC_CARD_TRANSITION_DURATION_MS}ms cubic-bezier(0.22, 1, 0.36, 1) forwards`
-											: undefined
-									}
-								>
+							<Flex mt={{ base: 3.5, md: 4.5 }} direction="column" gap={{ base: 2.5, md: 3 }}>
+								{project.summary.map((line) => (
 									<Text
-										fontSize={{ base: "3xl", md: "4xl" }}
-										fontWeight="800"
-										letterSpacing="-0.03em"
-										color="var(--color-text-primary)"
+										key={line}
+										data-project-case-summary
+										fontSize={{ base: "sm", md: "lg" }}
+										lineHeight={{ base: 1.8, md: 1.75 }}
+										color="var(--color-text-secondary)"
+										maxW="72ch"
 									>
-										{activeMetric.label}
+										{line}
 									</Text>
-									<Flex justify="space-between" align="flex-end" gap={3}>
-										<Text
-											fontSize={{ base: "xs", md: "sm" }}
-											lineHeight={{ base: 1.55, md: 1.6 }}
-											color="var(--color-text-tertiary)"
-											maxW="24ch"
-										>
-											{activeMetric.description}
-										</Text>
-										<Text
-											fontSize={{ base: "2xs", md: "xs" }}
-											fontWeight="700"
-											letterSpacing="0.12em"
-											textTransform="uppercase"
-											color="var(--color-text-accent)"
-											flexShrink={0}
-										>
-											{activeMetricOrder}
-										</Text>
-									</Flex>
-								</Box>
-
-								{incomingMetric ? (
-									<Box
-										key={incomingMetric.id}
-										data-project-case-metric
-										position="absolute"
-										inset="0"
-										p={{ base: 4, md: 5 }}
-										borderRadius="2xl"
-										border="1px solid rgba(125, 167, 198, 0.34)"
-										bg="rgba(240, 248, 255, 0.86)"
-										backdropFilter="blur(10px)"
-										boxShadow="0 16px 30px rgba(19, 52, 90, 0.14)"
-										display="flex"
-										flexDirection="column"
-										justifyContent="space-between"
-										transformOrigin="18% 78%"
-										animation={`${metricCardSwipeIn} ${METRIC_CARD_TRANSITION_DURATION_MS}ms cubic-bezier(0.22, 1, 0.36, 1) forwards`}
-									>
-										<Text
-											fontSize={{ base: "3xl", md: "4xl" }}
-											fontWeight="800"
-											letterSpacing="-0.03em"
-											color="var(--color-text-primary)"
-										>
-											{incomingMetric.label}
-										</Text>
-										<Flex justify="space-between" align="flex-end" gap={3}>
-											<Text
-												fontSize={{ base: "xs", md: "sm" }}
-												lineHeight={{ base: 1.55, md: 1.6 }}
-												color="var(--color-text-tertiary)"
-												maxW="24ch"
-											>
-												{incomingMetric.description}
-											</Text>
-											<Text
-												fontSize={{ base: "2xs", md: "xs" }}
-												fontWeight="700"
-												letterSpacing="0.12em"
-												textTransform="uppercase"
-												color="var(--color-text-accent)"
-												flexShrink={0}
-											>
-												{incomingMetricOrder}
-											</Text>
-										</Flex>
-									</Box>
-								) : null}
-							</Box>
+								))}
+							</Flex>
 						</Box>
+
+						<ProjectMetricStack
+							metricHeading={project.metricHeading}
+							activeMetric={activeMetric}
+							incomingMetric={incomingMetric}
+							activeMetricOrder={activeMetricOrder}
+							incomingMetricOrder={incomingMetricOrder}
+							prefersReducedMotion={prefersReducedMotion}
+						/>
 					</Grid>
 
 					<Grid
@@ -313,7 +162,7 @@ export function ProjectCaseStudyPanel() {
 								rowGap={{ base: 2, md: 2.5 }}
 								columnGap={{ base: 1.5, md: 2 }}
 							>
-								{firstProjectModules.map((moduleName, index) => (
+								{project.modules.map((moduleName, index) => (
 									<Text
 										key={moduleName}
 										data-project-case-module
@@ -323,7 +172,7 @@ export function ProjectCaseStudyPanel() {
 										color="var(--color-text-secondary)"
 									>
 										{moduleName}
-										{index < firstProjectModules.length - 1 ? " /" : ""}
+										{index < project.modules.length - 1 ? " /" : ""}
 									</Text>
 								))}
 							</Flex>
@@ -341,7 +190,7 @@ export function ProjectCaseStudyPanel() {
 								Impact Highlights
 							</Text>
 							<Flex direction="column" mt={{ base: 2.5, md: 3 }} gap={{ base: 2, md: 2.5 }}>
-								{firstProjectHighlights.map((highlight) => (
+								{project.highlights.map((highlight) => (
 									<Text
 										key={highlight}
 										data-project-case-highlight
