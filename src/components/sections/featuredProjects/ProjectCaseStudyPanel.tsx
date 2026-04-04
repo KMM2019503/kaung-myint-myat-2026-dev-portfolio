@@ -329,7 +329,7 @@ export function ProjectCaseStudyPanel() {
 							</Flex>
 						</Box>
 
-						<Box display={{base: "none", md: "block"}}>
+						<Box display={{ base: "none", md: "block" }}>
 							<Text
 								data-project-case-impact-label
 								fontSize={{ base: "xs", md: "sm" }}

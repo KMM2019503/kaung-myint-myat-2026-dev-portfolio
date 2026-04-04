@@ -108,6 +108,44 @@ export const firstProjectHighlights = [
 	"Built a payslip normalization layer for country-specific payloads instead of hardcoded branches.",
 ] as const;
 
+export const secondProjectSummary = [
+	"Built and optimized the core BetterHR web dashboard used across multiple regions.",
+	"Worked on the BetterHR frontend (Vue 2, Nuxt 2) for 1 year, delivering high-impact features and improving performance in a large-scale HR system.",
+] as const;
+
+export const secondProjectMetrics = [
+	{
+		id: "metric-id-payroll",
+		label: "Indonesia Payroll",
+		description: "Delivered region-specific payroll features for local requirements.",
+	},
+	{
+		id: "metric-employee-table",
+		label: "Employee Table Rewrite",
+		description: "Restructured large tables for stronger performance and scalability.",
+	},
+	{
+		id: "metric-duty-roster",
+		label: "Duty Roster Analytics",
+		description: "Optimized analytics and rendering for heavy roster datasets.",
+	},
+] as const;
+
+export const secondProjectModules = [
+	"Employee",
+	"Payroll (Indonesia)",
+	"Duty Roster",
+	"KPI",
+] as const;
+
+export const secondProjectHighlights = [
+	"Delivered Indonesia Payroll features supporting region-specific requirements.",
+	"Rewrote Employee table structure to significantly improve performance and scalability.",
+	"Built Duty Roster Analytics and optimized large table rendering.",
+	"Developed KPI View by Employee for better performance insights.",
+	"Continuously improved stability through bug fixes and product enhancements.",
+] as const;
+
 export interface ProjectPlaceholderPanelData {
 	id: string;
 	title: string;
@@ -115,6 +153,5 @@ export interface ProjectPlaceholderPanelData {
 }
 
 export const projectPlaceholders: readonly ProjectPlaceholderPanelData[] = [
-	{ id: "project-panel-2", title: "Project 02", caption: "Detailed project story coming next." },
 	{ id: "project-panel-3", title: "Project 03", caption: "Detailed project story coming next." },
 ];

@@ -172,6 +172,72 @@ export function useFeaturedProjectsAnimations({
 						"-=0.4",
 					);
 				}
+
+				const secondProjectPanel = sectionRef.current?.querySelector<HTMLElement>(
+					"[data-project-case-two-panel]",
+				);
+
+				if (secondProjectPanel) {
+					const secondProjectTimeline = gsap.timeline({
+						scrollTrigger: horizontalTween
+							? {
+									trigger: secondProjectPanel,
+									containerAnimation: horizontalTween,
+									start: "left 72%",
+									once: true,
+								}
+							: {
+									trigger: secondProjectPanel,
+									start: "top 72%",
+									once: true,
+								},
+					});
+
+					secondProjectTimeline.from("[data-project-case-two-shell]", {
+						x: 64,
+						y: 26,
+						opacity: 0,
+						scale: 0.98,
+						duration: 0.86,
+						ease: "power3.out",
+					});
+
+					secondProjectTimeline.from(
+						"[data-project-case-two-eyebrow], [data-project-case-two-title], [data-project-case-two-summary]",
+						{
+							y: 24,
+							opacity: 0,
+							stagger: 0.12,
+							duration: 0.64,
+							ease: "power3.out",
+						},
+						"-=0.46",
+					);
+
+					secondProjectTimeline.from(
+						"[data-project-case-two-metric-stack]",
+						{
+							x: 24,
+							y: 16,
+							opacity: 0,
+							duration: 0.62,
+							ease: "power3.out",
+						},
+						"-=0.44",
+					);
+
+					secondProjectTimeline.from(
+						"[data-project-case-two-metric], [data-project-case-two-module], [data-project-case-two-highlight], [data-project-case-two-scope-label], [data-project-case-two-impact-label]",
+						{
+							y: 18,
+							opacity: 0,
+							stagger: 0.04,
+							duration: 0.5,
+							ease: "power2.out",
+						},
+						"-=0.4",
+					);
+				}
 			}
 		}, sectionRef);
 

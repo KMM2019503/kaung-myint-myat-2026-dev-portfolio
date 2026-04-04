@@ -8,6 +8,7 @@ import {
 import { ProjectCaseStudyPanel } from "./featuredProjects/ProjectCaseStudyPanel";
 import { ProjectIntroPanel } from "./featuredProjects/ProjectIntroPanel";
 import { ProjectPlaceholderPanel } from "./featuredProjects/ProjectPlaceholderPanel";
+import { SecondProjectCaseStudyPanel } from "./featuredProjects/SecondProjectCaseStudyPanel";
 import { useFeaturedProjectsAnimations } from "./featuredProjects/useFeaturedProjectsAnimations";
 import { useProjectIntroTyping } from "./featuredProjects/useProjectIntroTyping";
 
@@ -60,6 +61,7 @@ export function FeaturedProjects() {
 					activeTypingLine={activeTypingLine}
 				/>
 				<ProjectCaseStudyPanel />
+				<SecondProjectCaseStudyPanel />
 
 				{projectPlaceholders.map((panel) => (
 					<ProjectPlaceholderPanel key={panel.id} panel={panel} />
