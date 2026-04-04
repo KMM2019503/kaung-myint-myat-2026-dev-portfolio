@@ -109,7 +109,6 @@ export const firstProjectHighlights = [
 ] as const;
 
 export const secondProjectSummary = [
-	"Built and optimized the core BetterHR web dashboard used across multiple regions.",
 	"Worked on the BetterHR frontend (Vue 2, Nuxt 2) for 1 year, delivering high-impact features and improving performance in a large-scale HR system.",
 ] as const;
 
