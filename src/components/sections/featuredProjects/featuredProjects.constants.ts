@@ -171,8 +171,7 @@ export const projectCaseStudies: readonly ProjectCaseStudyData[] = [
 	{
 		id: "project-03",
 		label: "BetterHR Dashboard Refactor (React, vite)",
-		title:
-			"Refactoring BetterHR Dashboard to React",
+		title: "Refactoring BetterHR Dashboard to React",
 		summary: [
 			"Contributed to a full frontend migration from Vue 2 / Nuxt 2 to React, focusing on performance, user experience, and efficient data flow across core HR modules.",
 		],
