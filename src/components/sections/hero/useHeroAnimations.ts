@@ -1,6 +1,14 @@
 import type { RefObject } from "react";
 import { useEffect } from "react";
 import { gsap } from "@/lib/gsap";
+import {
+	HERO_ART_ENTER_DURATION_S,
+	HERO_HEADING_ENTER_DURATION_S,
+	HERO_HEADING_ENTER_STAGGER_S,
+	HERO_SUPPORT_ENTER_DURATION_S,
+	HERO_SUPPORT_ENTER_STAGGER_S,
+	HERO_SUPPORT_OVERLAP_WITH_HEADING_S,
+} from "./heroAnimationTimings";
 
 interface HeroAnimationRefs {
 	sectionRef: RefObject<HTMLDivElement | null>;
@@ -25,14 +33,14 @@ export function useHeroAnimations({
 				y: 36,
 				opacity: 0,
 				scale: 0.88,
-				duration: 0.95,
+				duration: HERO_ART_ENTER_DURATION_S,
 			});
 
 			timeline.from(headingRef.current?.children ?? [], {
 				x: -28,
 				opacity: 0,
-				duration: 0.82,
-				stagger: 0.12,
+				duration: HERO_HEADING_ENTER_DURATION_S,
+				stagger: HERO_HEADING_ENTER_STAGGER_S,
 			});
 
 			timeline.from(
@@ -40,10 +48,10 @@ export function useHeroAnimations({
 				{
 					x: 28,
 					opacity: 0,
-					duration: 0.78,
-					stagger: 0.1,
+					duration: HERO_SUPPORT_ENTER_DURATION_S,
+					stagger: HERO_SUPPORT_ENTER_STAGGER_S,
 				},
-				"-=0.5",
+				`-=${HERO_SUPPORT_OVERLAP_WITH_HEADING_S}`,
 			);
 
 			if (codingLogoRef.current) {

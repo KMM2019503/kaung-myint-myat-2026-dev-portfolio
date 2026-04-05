@@ -261,29 +261,34 @@ h6 {
 @keyframes app-loading-overlay-exit {
 	0% {
 		opacity: 1;
-		transform: translateY(0) scale(1);
-		filter: blur(0);
+		transform: translateY(0);
 	}
 	100% {
 		opacity: 0;
-		transform: translateY(-22px) scale(1.02);
-		filter: blur(7px);
+		transform: translateY(-14px);
 	}
 }
 
 @keyframes app-main-shell-enter {
 	0% {
 		opacity: 0;
-		transform: translateY(28px) scale(0.985);
-		filter: blur(8px);
+		transform: translateY(18px);
 	}
 	60% {
 		opacity: 0.92;
 	}
 	100% {
 		opacity: 1;
-		transform: translateY(0) scale(1);
-		filter: blur(0);
+		transform: translateY(0);
+	}
+}
+
+@keyframes ambient-background-fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }
 
@@ -292,11 +297,11 @@ h6 {
 	inset: 0;
 	z-index: 8;
 	background: var(--color-bg-primary);
-	will-change: opacity, transform, filter;
+	will-change: opacity, transform;
 }
 
 .app-loading-overlay.is-exiting {
-	animation: app-loading-overlay-exit 0.92s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	animation: app-loading-overlay-exit 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .app-main-shell {
@@ -306,14 +311,19 @@ h6 {
 }
 
 .app-main-shell.is-entering {
-	animation: app-main-shell-enter 0.98s cubic-bezier(0.18, 0.9, 0.3, 1) both;
+	animation: app-main-shell-enter 0.7s cubic-bezier(0.18, 0.9, 0.3, 1) both;
+}
+
+.ambient-background-fade-in {
+	animation: ambient-background-fade-in 0.6s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
 	.loading-logo-appear,
 	.loading-logo-path,
 	.app-loading-overlay.is-exiting,
-	.app-main-shell.is-entering {
+	.app-main-shell.is-entering,
+	.ambient-background-fade-in {
 		animation: none;
 	}
 
@@ -326,12 +336,10 @@ h6 {
 	.app-loading-overlay.is-exiting {
 		opacity: 0;
 		transform: none;
-		filter: none;
 	}
 
 	.app-main-shell {
 		opacity: 1;
 		transform: none;
-		filter: none;
 	}
 }

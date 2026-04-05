@@ -6,13 +6,15 @@ import Experience from "@/components/sections/Experience";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
 import SeniorRecommendations from "@/components/sections/SeniorRecommendations";
+import { HERO_PRIMARY_APPEAR_DURATION_MS } from "@/components/sections/hero/heroAnimationTimings";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
 import { useInitialLoading } from "@/hooks/useInitialLoading";
 import { useSeoMetadata } from "@/seo/useSeoMetadata";
 
-const LOADING_TO_HERO_TRANSITION_MS = 920;
+const LOADING_TO_HERO_TRANSITION_MS = 700;
+const AMBIENT_BACKGROUND_MOUNT_DELAY_MS = HERO_PRIMARY_APPEAR_DURATION_MS;
 
 function App() {
 	useSeoMetadata();
@@ -21,6 +23,7 @@ function App() {
 	const [isMainMounted, setIsMainMounted] = useState(false);
 	const [showLoadingOverlay, setShowLoadingOverlay] = useState(true);
 	const [isTransitioning, setIsTransitioning] = useState(false);
+	const [showAmbientBackground, setShowAmbientBackground] = useState(false);
 
 	useEffect(() => {
 		if (isLoading) {
@@ -28,20 +31,44 @@ function App() {
 		}
 
 		setIsMainMounted(true);
-		setIsTransitioning(true);
 
 		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-		const transitionDuration = prefersReducedMotion ? 0 : LOADING_TO_HERO_TRANSITION_MS;
+		if (prefersReducedMotion) {
+			setShowLoadingOverlay(false);
+			setIsTransitioning(false);
+			return;
+		}
+
+		const frameId = window.requestAnimationFrame(() => {
+			setIsTransitioning(true);
+		});
 
 		const timeoutId = window.setTimeout(() => {
 			setShowLoadingOverlay(false);
 			setIsTransitioning(false);
-		}, transitionDuration);
+		}, LOADING_TO_HERO_TRANSITION_MS);
+
+		return () => {
+			window.cancelAnimationFrame(frameId);
+			window.clearTimeout(timeoutId);
+		};
+	}, [isLoading]);
+
+	useEffect(() => {
+		if (!isMainMounted || showAmbientBackground) {
+			return;
+		}
+
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const delayMs = prefersReducedMotion ? 0 : AMBIENT_BACKGROUND_MOUNT_DELAY_MS;
+		const timeoutId = window.setTimeout(() => {
+			setShowAmbientBackground(true);
+		}, delayMs);
 
 		return () => {
 			window.clearTimeout(timeoutId);
 		};
-	}, [isLoading]);
+	}, [isMainMounted, showAmbientBackground]);
 
 	return (
 		<Box
@@ -53,12 +80,16 @@ function App() {
 		>
 			{isMainMounted ? (
 				<Box className={isTransitioning ? "app-main-shell is-entering" : "app-main-shell"}>
-					<AmbientBackground
-						lightOpacityMultiplier={1.8}
-						darkOpacityMultiplier={0.55}
-						lightOrbOpacityMultipliers={[0.45, 0.55, 0.7, 0.35, 0.3]}
-						darkOrbOpacityMultipliers={[0.3, 0.4, 0.8, 0.2, 0.5]}
-					/>
+					{showAmbientBackground ? (
+						<Box className="ambient-background-fade-in">
+							<AmbientBackground
+								lightOpacityMultiplier={1.8}
+								darkOpacityMultiplier={0.55}
+								lightOrbOpacityMultipliers={[0.45, 0.55, 0.7, 0.35, 0.3]}
+								darkOrbOpacityMultipliers={[0.3, 0.4, 0.8, 0.2, 0.5]}
+							/>
+						</Box>
+					) : null}
 					<Navbar />
 					<AppToaster />
 
