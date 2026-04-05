@@ -232,7 +232,7 @@ export function HeroSupportBlock({ supportRef }: HeroSupportBlockProps) {
 				</Link>
 
 				<Link
-					href="#projects"
+					href="#experience"
 					display="inline-flex"
 					alignItems="center"
 					justifyContent="center"
