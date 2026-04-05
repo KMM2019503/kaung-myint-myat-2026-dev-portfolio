@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kaung-myint-myat-2026-dev-portfolio.vercel.app/sitemap.xml

@@ -5,11 +5,12 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
+		"build": "node scripts/generate-seo-assets.mjs && tsc -b && vite build",
 		"preview": "vite preview",
 		"lint": "biome check .",
 		"lint:fix": "biome check --fix .",
-		"format": "biome format --write ."
+		"format": "biome format --write .",
+		"seo:assets": "node scripts/generate-seo-assets.mjs"
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^3.33.0",

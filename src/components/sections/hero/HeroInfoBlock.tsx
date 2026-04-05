@@ -61,7 +61,8 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 				Kaung Myint Myat
 			</Text>
 			<Text
-				as="h1"
+				as="span"
+				display="block"
 				mt={{ base: 3, md: 4 }}
 				fontFamily='"Lora", serif'
 				fontSize={{ base: "3xl", sm: "4xl", md: "4xl", xl: "4xl" }}

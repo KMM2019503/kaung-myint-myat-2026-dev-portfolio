@@ -10,10 +10,13 @@ import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
 import { useInitialLoading } from "@/hooks/useInitialLoading";
+import { useSeoMetadata } from "@/seo/useSeoMetadata";
 
 const LOADING_TO_HERO_TRANSITION_MS = 920;
 
 function App() {
+	useSeoMetadata();
+
 	const isLoading = useInitialLoading();
 	const [isMainMounted, setIsMainMounted] = useState(false);
 	const [showLoadingOverlay, setShowLoadingOverlay] = useState(true);
