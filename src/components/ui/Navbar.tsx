@@ -39,11 +39,12 @@ export function Navbar() {
 		}
 
 		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const isDesktopNav = window.matchMedia("(min-width: 62em)").matches;
 		const navHeight = navRef.current?.offsetHeight ?? 0;
 		const navTopOffset = navRef.current
 			? Number.parseFloat(window.getComputedStyle(navRef.current).top || "0")
 			: 0;
-		const scrollOffset = navHeight + navTopOffset + 10;
+		const scrollOffset = isDesktopNav ? 20 : navHeight + navTopOffset + 10;
 		const targetY = targetSection.getBoundingClientRect().top + window.scrollY - scrollOffset;
 
 		window.history.replaceState(null, "", href);
@@ -113,49 +114,83 @@ export function Navbar() {
 			return;
 		}
 
-		const observer = new IntersectionObserver(
-			(entries) => {
-				const currentSection = entries
-					.filter((entry) => entry.isIntersecting)
-					.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+		let rafId: number | null = null;
 
-				if (currentSection?.target.id) {
-					setActiveSection(`#${currentSection.target.id}`);
+		const updateActiveSection = () => {
+			const probeY = window.scrollY + window.innerHeight * 0.35;
+			let nextActiveSection = `#${sections[0].id}`;
+
+			for (const section of sections) {
+				const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+				if (sectionTop <= probeY) {
+					nextActiveSection = `#${section.id}`;
+				} else {
+					break;
 				}
-			},
-			{
-				rootMargin: "-35% 0px -55% 0px",
-				threshold: [0.2, 0.45, 0.65],
-			},
-		);
+			}
 
-		sections.forEach((section) => {
-			observer.observe(section);
-		});
+			const viewportBottom = window.scrollY + window.innerHeight;
+			const documentBottom = document.documentElement.scrollHeight;
+			if (viewportBottom >= documentBottom - 2) {
+				nextActiveSection = `#${sections[sections.length - 1]?.id ?? sections[0].id}`;
+			}
+
+			setActiveSection((previous) =>
+				previous === nextActiveSection ? previous : nextActiveSection,
+			);
+			rafId = null;
+		};
+
+		const queueActiveSectionUpdate = () => {
+			if (rafId !== null) {
+				return;
+			}
+
+			rafId = window.requestAnimationFrame(updateActiveSection);
+		};
 
 		const onHashChange = () => {
 			if (window.location.hash) {
 				setActiveSection(window.location.hash);
+				queueActiveSectionUpdate();
 			}
 		};
 
-		onHashChange();
+		queueActiveSectionUpdate();
+		window.addEventListener("scroll", queueActiveSectionUpdate, { passive: true });
+		window.addEventListener("resize", queueActiveSectionUpdate);
 		window.addEventListener("hashchange", onHashChange);
 
 		return () => {
-			observer.disconnect();
+			window.removeEventListener("scroll", queueActiveSectionUpdate);
+			window.removeEventListener("resize", queueActiveSectionUpdate);
 			window.removeEventListener("hashchange", onHashChange);
+			if (rafId !== null) {
+				window.cancelAnimationFrame(rafId);
+			}
 		};
 	}, []);
+
+	const navTransform =
+		isInitialVisible && isNavVisible
+			? {
+					base: "translateX(-50%) translateY(0)",
+					lg: "translateY(-50%) translateX(0)",
+				}
+			: {
+					base: "translateX(-50%) translateY(-130%)",
+					lg: "translateY(-50%) translateX(130%)",
+				};
 
 	return (
 		<Box
 			as="nav"
 			ref={navRef}
 			position="fixed"
-			top={{ base: "2", sm: "3", md: "4", lg: "5" }}
-			left="50%"
-			transform={`translateX(-50%) translateY(${isInitialVisible && isNavVisible ? "0" : "-130%"})`}
+			top={{ base: "2", sm: "3", md: "4", lg: "50%" }}
+			left={{ base: "50%", lg: "auto" }}
+			right={{ base: "auto", lg: "5" }}
+			transform={navTransform}
 			zIndex="1000"
 			opacity={isInitialVisible && isNavVisible ? 1 : 0}
 			transition="transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease"
@@ -164,10 +199,11 @@ export function Navbar() {
 		>
 			<Flex
 				align="center"
-				gap={{ base: "1", sm: "1.5", md: "1.5", lg: "2" }}
-				px={{ base: "1.5", sm: "2", md: "2", lg: "2.25" }}
+				direction={{ base: "row", lg: "column" }}
+				gap={{ base: "1", sm: "1.5", md: "1.5", lg: "1.25" }}
+				px={{ base: "1.5", sm: "2", md: "2", lg: "2" }}
 				py={{ base: "1.5", sm: "1.75", md: "2", lg: "2.25" }}
-				borderRadius="999px"
+				borderRadius={{ base: "999px", lg: "2xl" }}
 				pointerEvents="auto"
 				css={{
 					background: isScrolled ? "var(--surface-floating-solid)" : "var(--surface-floating)",
@@ -178,7 +214,7 @@ export function Navbar() {
 					border: "1px solid color-mix(in srgb, var(--surface-floating-border) 75%, transparent)",
 				}}
 			>
-				<Flex align="center" gap="1">
+				<Flex align="center" gap="1" direction={{ base: "row", lg: "column" }}>
 					{navLinks.map((link, index) => {
 						const Icon = link.icon;
 						const isActive = activeSection === link.href;
@@ -236,8 +272,8 @@ export function Navbar() {
 				</Flex>
 
 				<Box
-					w="1px"
-					h={{ base: "20px", sm: "21px", md: "22px", lg: "24px" }}
+					w={{ base: "1px", lg: "20px" }}
+					h={{ base: "20px", sm: "21px", md: "22px", lg: "1px" }}
 					bg="color-mix(in srgb, var(--surface-floating-border) 85%, transparent)"
 				/>
 
