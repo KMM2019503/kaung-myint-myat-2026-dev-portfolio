@@ -207,3 +207,131 @@ h6 {
 		opacity: 0;
 	}
 }
+
+@keyframes loading-logo-appear {
+	0% {
+		opacity: 0;
+		transform: translateY(10px) scale(0.96);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes loading-logo-path-draw {
+	0% {
+		stroke-dashoffset: 1;
+		opacity: 0;
+	}
+	20% {
+		opacity: 0.65;
+	}
+	100% {
+		stroke-dashoffset: 0;
+		opacity: 1;
+	}
+}
+
+@keyframes loading-logo-path-fill {
+	0% {
+		fill-opacity: 0;
+	}
+	100% {
+		fill-opacity: 1;
+	}
+}
+
+.loading-logo-appear {
+	animation: loading-logo-appear 0.6s ease-out both;
+}
+
+.loading-logo-path {
+	fill: currentColor;
+	fill-opacity: 0;
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation-name: loading-logo-path-draw, loading-logo-path-fill;
+	animation-duration: 1s, 0.32s;
+	animation-timing-function: ease, ease-out;
+	animation-fill-mode: forwards, forwards;
+	animation-delay: var(--loading-delay, 0s), calc(var(--loading-delay, 0s) + 1s);
+}
+
+@keyframes app-loading-overlay-exit {
+	0% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-22px) scale(1.02);
+		filter: blur(7px);
+	}
+}
+
+@keyframes app-main-shell-enter {
+	0% {
+		opacity: 0;
+		transform: translateY(28px) scale(0.985);
+		filter: blur(8px);
+	}
+	60% {
+		opacity: 0.92;
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0);
+	}
+}
+
+.app-loading-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 8;
+	background: var(--color-bg-primary);
+	will-change: opacity, transform, filter;
+}
+
+.app-loading-overlay.is-exiting {
+	animation: app-loading-overlay-exit 0.92s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.app-main-shell {
+	position: relative;
+	z-index: 1;
+	min-height: var(--viewport-height-dynamic);
+}
+
+.app-main-shell.is-entering {
+	animation: app-main-shell-enter 0.98s cubic-bezier(0.18, 0.9, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.loading-logo-appear,
+	.loading-logo-path,
+	.app-loading-overlay.is-exiting,
+	.app-main-shell.is-entering {
+		animation: none;
+	}
+
+	.loading-logo-path {
+		stroke-dashoffset: 0;
+		opacity: 1;
+		fill-opacity: 1;
+	}
+
+	.app-loading-overlay.is-exiting {
+		opacity: 0;
+		transform: none;
+		filter: none;
+	}
+
+	.app-main-shell {
+		opacity: 1;
+		transform: none;
+		filter: none;
+	}
+}
