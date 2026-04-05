@@ -78,6 +78,30 @@ export function Experience() {
 				});
 			}
 
+			const getProgressScrollTriggerConfig = () => {
+				const firstCard = cards[0];
+				const lastCard = cards[cards.length - 1];
+
+				if (firstCard && lastCard) {
+					return {
+						trigger: firstCard,
+						start: "top 86%",
+						endTrigger: lastCard,
+						end: "top 46%",
+						scrub: true,
+						invalidateOnRefresh: true,
+					};
+				}
+
+				return {
+					trigger: timelineRef.current,
+					start: "top 72%",
+					end: "bottom 28%",
+					scrub: true,
+					invalidateOnRefresh: true,
+				};
+			};
+
 			media.add("(max-width: 61.99em)", () => {
 				if (!progressLineRef.current) {
 					return;
@@ -89,12 +113,7 @@ export function Experience() {
 					{
 						scaleY: 1,
 						ease: "none",
-						scrollTrigger: {
-							trigger: timelineRef.current,
-							start: "top 72%",
-							end: "bottom 28%",
-							scrub: true,
-						},
+						scrollTrigger: getProgressScrollTriggerConfig(),
 					},
 				);
 			});
@@ -282,12 +301,7 @@ export function Experience() {
 					progress: 1,
 					ease: "none",
 					onUpdate: drawCurve,
-					scrollTrigger: {
-						trigger: timelineRef.current,
-						start: "top 72%",
-						end: "bottom 28%",
-						scrub: true,
-					},
+					scrollTrigger: getProgressScrollTriggerConfig(),
 				});
 
 				window.addEventListener("resize", resizeCanvas);
@@ -301,10 +315,12 @@ export function Experience() {
 			for (const [index, card] of cards.entries()) {
 				const side = card.dataset.side ?? "right";
 				const xOffset = side === "left" ? -42 : 42;
+				const revealStarts = ["top 90%", "top 86%", "top 82%"];
 				const cardTrigger = {
 					trigger: card,
-					start: "top 100%",
+					start: revealStarts[index] ?? "top 84%",
 					toggleActions: "play none none reverse",
+					invalidateOnRefresh: true,
 				};
 
 				gsap.from(card, {

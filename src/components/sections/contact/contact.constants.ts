@@ -10,6 +10,7 @@ export interface ContactRailItem {
 export type ChannelInteractionType = "copy" | "next-tab";
 
 export interface ChannelRailItem extends ContactRailItem {
+	displayValue?: string;
 	interactionType: ChannelInteractionType;
 	interactionTarget?: string;
 }
@@ -35,6 +36,23 @@ export const channelRails = [
 		id: "channel-linkedin",
 		label: "LinkedIn",
 		value: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
+		displayValue: "View LinkedIn Profile",
+		interactionType: "next-tab",
+		interactionTarget: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
+	},
+	{
+		id: "channel-github",
+		label: "GitHub",
+		value: "https://github.com/KMM2019503",
+		displayValue: "View GitHub Profile",
+		interactionType: "next-tab",
+		interactionTarget: "https://github.com/KMM2019503",
+	},
+	{
+		id: "channel-cv-form",
+		label: "CV / Resume",
+		value: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
+		displayValue: "Download my CV",
 		interactionType: "next-tab",
 		interactionTarget: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
 	},

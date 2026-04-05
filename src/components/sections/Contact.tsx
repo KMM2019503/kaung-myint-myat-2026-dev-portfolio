@@ -80,7 +80,6 @@ export function Contact() {
 						zIndex="1"
 						px={{ base: 5, md: 8 }}
 						pb={{ base: 6, md: 8 }}
-						pt={{ base: 3, md: 4 }}
 						textAlign="center"
 					>
 						<Text

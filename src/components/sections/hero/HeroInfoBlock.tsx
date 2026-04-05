@@ -34,12 +34,12 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 				}}
 			>
 				<Text
-					fontSize={{ base: "xl", md: "3xl", xl: "4xl" }}
+					fontSize={{ base: "xl", md: "3xl", xl: "3xl" }}
 					fontWeight="700"
 					letterSpacing="0.06em"
 					lineHeight="1"
 				>
-					你好,
+					Hola,
 				</Text>
 				<Text
 					fontSize={{ base: "xs", sm: "sm" }}
