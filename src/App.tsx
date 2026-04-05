@@ -1,8 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Contact from "@/components/sections/Contact";
 import Experience from "@/components/sections/Experience";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
+import SeniorRecommendations from "@/components/sections/SeniorRecommendations";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
@@ -29,6 +30,7 @@ function App() {
 				<Hero />
 				<Experience />
 				<FeaturedProjects />
+				<SeniorRecommendations />
 				<Contact />
 			</Box>
 		</Box>
