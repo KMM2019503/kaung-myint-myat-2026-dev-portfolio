@@ -72,34 +72,47 @@
 
 /* Dark Mode */
 .dark {
+	/* Primary Colors - Twilight Purple */
+	--color-primary-50: #f3efff;
+	--color-primary-100: #e8defe;
+	--color-primary-200: #d8c4fc;
+	--color-primary-300: #c1a2fa;
+	--color-primary-400: #a17af3;
+	--color-primary-500: #855be8;
+	--color-primary-600: #6f45d0;
+	--color-primary-700: #5a38aa;
+	--color-primary-800: #492f86;
+	--color-primary-900: #3c276d;
+	--color-primary-950: #281b49;
+
 	/* Background Colors */
-	--color-bg-primary: #0b1626;
-	--color-bg-secondary: #142338;
-	--color-bg-tertiary: #1f334e;
+	--color-bg-primary: #0f0c1a;
+	--color-bg-secondary: #17112a;
+	--color-bg-tertiary: #231a3a;
 
 	/* Text Colors */
-	--color-text-primary: #f4f9ff;
-	--color-text-secondary: #d2e0ef;
-	--color-text-tertiary: #9db4c9;
-	--color-text-eyebrow: #b8cbdd;
-	--color-text-inverse: #0b1626;
+	--color-text-primary: #f5f0ff;
+	--color-text-secondary: #d9cfef;
+	--color-text-tertiary: #afa2cd;
+	--color-text-eyebrow: #c6b8e3;
+	--color-text-inverse: #100a1f;
 	/* Text Consistency Roles */
-	--color-text-accent: #63c5ff;
-	--color-text-accent-strong: #9fddff;
-	--gradient-text-accent: linear-gradient(120deg, #63c5ff, #9fddff);
+	--color-text-accent: #a784ff;
+	--color-text-accent-strong: #d4c2ff;
+	--gradient-text-accent: linear-gradient(120deg, #a784ff, #d8c6ff);
 
 	/* Border Colors */
-	--color-border: #2a4058;
-	--color-border-hover: #35506e;
+	--color-border: #3a2d59;
+	--color-border-hover: #4b3b70;
 
 	/* Floating Surfaces */
-	--surface-floating: rgba(13, 25, 40, 0.72);
-	--surface-floating-solid: rgba(13, 25, 40, 0.9);
-	--surface-floating-border: rgba(57, 83, 109, 0.95);
+	--surface-floating: rgba(18, 13, 34, 0.72);
+	--surface-floating-solid: rgba(18, 13, 34, 0.9);
+	--surface-floating-border: rgba(86, 69, 125, 0.95);
 
 	/* Accent Colors */
-	--color-accent: #63c5ff;
-	--color-accent-hover: #9fddff;
+	--color-accent: #a784ff;
+	--color-accent-hover: #c4adff;
 
 	/* Shadows */
 	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
@@ -122,8 +135,16 @@ html {
 body {
 	font-family: "Ubuntu", sans-serif;
 	background:
-		radial-gradient(circle at 8% 14%, rgba(145, 212, 255, 0.18), transparent 44%),
-		radial-gradient(circle at 92% 10%, rgba(47, 157, 221, 0.14), transparent 38%),
+		radial-gradient(
+			circle at 8% 14%,
+			color-mix(in srgb, var(--color-primary-300) 20%, transparent),
+			transparent 44%
+		),
+		radial-gradient(
+			circle at 92% 10%,
+			color-mix(in srgb, var(--color-primary-500) 16%, transparent),
+			transparent 38%
+		),
 		var(--color-bg-primary);
 	color: var(--color-text-primary);
 	line-height: 1.6;
@@ -161,7 +182,7 @@ h6 {
 
 .dark ::selection {
 	background-color: var(--color-primary-700);
-	color: #e6f3ff;
+	color: #f3ebff;
 }
 
 /* Hide Scrollbars (keep scrolling functional) */
