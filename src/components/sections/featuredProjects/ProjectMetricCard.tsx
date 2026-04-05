@@ -21,10 +21,10 @@ export function ProjectMetricCard({
 			inset="0"
 			p={{ base: 4, md: 5 }}
 			borderRadius="2xl"
-			border="1px solid rgba(125, 167, 198, 0.34)"
-			bg="rgba(240, 248, 255, 0.86)"
+			border="1px solid color-mix(in srgb, var(--surface-floating-border) 88%, transparent)"
+			bg="color-mix(in srgb, var(--surface-floating-solid) 90%, transparent)"
 			backdropFilter="blur(10px)"
-			boxShadow="0 16px 30px rgba(19, 52, 90, 0.14)"
+			boxShadow="0 16px 30px color-mix(in srgb, var(--color-primary-900) 22%, transparent)"
 			display="flex"
 			flexDirection="column"
 			justifyContent="space-between"

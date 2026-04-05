@@ -8,10 +8,6 @@ export function useTheme() {
 		if (typeof window !== "undefined") {
 			const stored = localStorage.getItem("theme") as Theme | null;
 			if (stored) return stored;
-			// Then check system preference
-			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-				return "dark";
-			}
 		}
 		return "light";
 	});

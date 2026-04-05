@@ -4,9 +4,10 @@ import { gsap } from "@/lib/gsap";
 
 interface UseContactAnimationsArgs {
 	sectionRef: RefObject<HTMLDivElement | null>;
+	photoRef: RefObject<HTMLDivElement | null>;
 }
 
-export function useContactAnimations({ sectionRef }: UseContactAnimationsArgs) {
+export function useContactAnimations({ sectionRef, photoRef }: UseContactAnimationsArgs) {
 	useEffect(() => {
 		if (!sectionRef.current) {
 			return;
@@ -82,8 +83,37 @@ export function useContactAnimations({ sectionRef }: UseContactAnimationsArgs) {
 					},
 				});
 			}
+
+			if (photoRef.current) {
+				gsap.from(photoRef.current, {
+					y: 20,
+					opacity: 0,
+					scale: 0.95,
+					duration: 0.72,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 76%",
+						once: true,
+					},
+				});
+
+				gsap.set(photoRef.current, {
+					rotate: -2.2,
+					transformOrigin: "center center",
+				});
+
+				gsap.to(photoRef.current, {
+					y: -10,
+					rotate: 2.2,
+					duration: 3.1,
+					repeat: -1,
+					yoyo: true,
+					ease: "sine.inOut",
+				});
+			}
 		}, sectionRef);
 
 		return () => ctx.revert();
-	}, [sectionRef]);
+	}, [photoRef, sectionRef]);
 }

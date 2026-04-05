@@ -31,24 +31,6 @@ function App() {
 				<FeaturedProjects />
 				<Contact />
 			</Box>
-
-			<Box
-				as="footer"
-				position="relative"
-				zIndex="1"
-				px={{ base: 5, md: 8 }}
-				pb={{ base: 6, md: 8 }}
-				pt={{ base: 3, md: 4 }}
-				textAlign="center"
-			>
-				<Text
-					fontSize={{ base: "xs", md: "sm" }}
-					color="var(--color-text-tertiary)"
-					letterSpacing="0.04em"
-				>
-					© {new Date().getFullYear()} Kaung Myint Myat. All rights reserved.
-				</Text>
-			</Box>
 		</Box>
 	);
 }

@@ -81,8 +81,8 @@ export function ProjectMetricStack({
 					position="absolute"
 					inset="0"
 					borderRadius="2xl"
-					bg="rgba(232, 243, 255, 0.62)"
-					border="1px solid rgba(125, 167, 198, 0.26)"
+					bg="color-mix(in srgb, var(--surface-floating) 78%, transparent)"
+					border="1px solid color-mix(in srgb, var(--surface-floating-border) 82%, transparent)"
 					transform="translate3d(8px, 4px, 0)"
 				/>
 				<ProjectMetricCard
