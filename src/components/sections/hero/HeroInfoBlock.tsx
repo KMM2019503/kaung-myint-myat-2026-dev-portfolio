@@ -98,7 +98,7 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 					color="var(--color-text-secondary)"
 				>
 					<DotIcon size={18} color="var(--color-accent)" style={{ display: "inline" }} />
-					Specializing in React, Vue, and React Native
+					Specializing in NEXT.js, React, Vue, and React Native
 				</Text>
 				<Text
 					fontFamily='"Ubuntu", sans-serif'

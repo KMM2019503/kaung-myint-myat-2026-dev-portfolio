@@ -1,3 +1,5 @@
+import kaungMyintMyatResumePdfUrl from "../../../assets/files/kaung_myint_myat_resume.pdf?url";
+
 export const CONTACT_EMAIL = "kaungmyintmyat2003@gmail.com";
 
 export interface ContactRailItem {
@@ -7,7 +9,7 @@ export interface ContactRailItem {
 	note?: string;
 }
 
-export type ChannelInteractionType = "copy" | "next-tab";
+export type ChannelInteractionType = "copy" | "next-tab" | "download";
 
 export interface ChannelRailItem extends ContactRailItem {
 	displayValue?: string;
@@ -51,10 +53,10 @@ export const channelRails = [
 	{
 		id: "channel-cv-form",
 		label: "CV / Resume",
-		value: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
+		value: kaungMyintMyatResumePdfUrl,
 		displayValue: "Download my CV",
-		interactionType: "next-tab",
-		interactionTarget: "https://www.linkedin.com/in/kaung-myint-myat-921273282/",
+		interactionType: "download",
+		interactionTarget: "kaung_myint_myat_resume.pdf",
 	},
 	{
 		id: "telegram-acc",

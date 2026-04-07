@@ -53,11 +53,11 @@ export function ContactInfoColumn({ photoRef, onChannelAction }: ContactInfoColu
 							lineHeight="1.45"
 							textAlign="right"
 							color={
-								item.interactionType === "next-tab"
+								item.interactionType !== "copy"
 									? "var(--color-text-accent-strong)"
 									: "var(--color-text-primary)"
 							}
-							textDecoration={item.interactionType === "next-tab" ? "underline" : "none"}
+							textDecoration={item.interactionType !== "copy" ? "underline" : "none"}
 							textUnderlineOffset="3px"
 							cursor={item.interactionType === "copy" ? "copy" : "pointer"}
 							_hover={{ color: "var(--color-text-accent)" }}

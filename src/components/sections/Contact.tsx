@@ -33,6 +33,19 @@ export function Contact() {
 			return;
 		}
 
+		if (item.interactionType === "download") {
+			const fileUrl = item.value;
+			const fileName = item.interactionTarget || "download";
+			const anchor = document.createElement("a");
+			anchor.href = fileUrl;
+			anchor.download = fileName;
+			anchor.rel = "noopener noreferrer";
+			document.body.appendChild(anchor);
+			anchor.click();
+			document.body.removeChild(anchor);
+			return;
+		}
+
 		const copyValue = item.interactionTarget || item.value;
 
 		try {

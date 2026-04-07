@@ -1,3 +1,5 @@
+import kaungMyintMyatResumePdfUrl from "../../../assets/files/kaung_myint_myat_resume.pdf?url";
+
 export interface HeroFloatingChip {
 	id: string;
 	label: string;
@@ -81,5 +83,4 @@ export const codeLines = [
 	"}",
 ];
 
-export const downloadCvHref =
-	"https://drive.google.com/file/d/1XW9yeee0fN64HLe9Ara_e2-HZTqPveAV/view?usp=sharing";
+export const downloadCvHref = kaungMyintMyatResumePdfUrl;

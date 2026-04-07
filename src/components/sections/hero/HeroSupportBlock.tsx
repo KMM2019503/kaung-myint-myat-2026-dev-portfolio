@@ -213,8 +213,7 @@ export function HeroSupportBlock({ supportRef }: HeroSupportBlockProps) {
 			>
 				<Link
 					href={downloadCvHref}
-					target="_blank"
-					rel="noopener noreferrer"
+					download="kaung_myint_myat_resume.pdf"
 					display="inline-flex"
 					fontSize={{ base: "md", md: "lg" }}
 					fontWeight="700"

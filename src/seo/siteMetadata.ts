@@ -9,9 +9,10 @@ export const CONTACT_EMAIL = "kaungmyintmyat2003@gmail.com";
 export const SITE_KEYWORDS = [
 	"Kaung Myint Myat",
 	"Frontend Developer",
-	"Mobile Developer",
+	"Next.js",
 	"React",
 	"Vue.js",
+	"Mobile Developer",
 	"React Native",
 	"TypeScript",
 	"Portfolio",
