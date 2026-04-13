@@ -211,7 +211,3 @@ export interface ProjectPlaceholderPanelData {
 	title: string;
 	caption: string;
 }
-
-export const projectPlaceholders: readonly ProjectPlaceholderPanelData[] = [
-	// Intentionally empty: all current featured projects are represented as full case studies.
-];

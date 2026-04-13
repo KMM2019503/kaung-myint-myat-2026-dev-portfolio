@@ -83,7 +83,7 @@ export function ProjectMetricStack({
 					borderRadius="2xl"
 					bg="color-mix(in srgb, var(--surface-floating) 78%, transparent)"
 					border="1px solid color-mix(in srgb, var(--surface-floating-border) 82%, transparent)"
-					transform="translate3d(8px, 4px, 0)"
+					transform="translate3d(4px, 4px, 0)"
 				/>
 				<ProjectMetricCard
 					key={activeMetric.id}

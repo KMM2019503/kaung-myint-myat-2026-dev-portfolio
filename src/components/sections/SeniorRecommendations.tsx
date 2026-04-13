@@ -162,7 +162,6 @@ export function SeniorRecommendations() {
 										borderRadius="2xl"
 										bg="color-mix(in srgb, var(--surface-floating) 88%, transparent)"
 										border="1px solid color-mix(in srgb, var(--surface-floating-border) 88%, transparent)"
-										boxShadow="0 18px 38px -30px rgba(16, 24, 40, 0.52)"
 										display="flex"
 										flexDirection="column"
 										justifyContent="space-between"

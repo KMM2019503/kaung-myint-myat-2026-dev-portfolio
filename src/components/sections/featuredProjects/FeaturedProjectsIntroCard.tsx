@@ -33,7 +33,6 @@ export function FeaturedProjectsIntroCard({
 				bg="color-mix(in srgb, var(--color-bg-primary) 84%, transparent)"
 				css={{
 					backdropFilter: "blur(16px)",
-					boxShadow: "0 26px 52px -38px rgba(15, 23, 42, 0.55)",
 				}}
 			>
 				<Flex
@@ -125,7 +124,6 @@ export function FeaturedProjectsIntroCard({
 						color="var(--color-text-secondary)"
 						css={{
 							backdropFilter: "blur(10px)",
-							boxShadow: "0 16px 24px -22px rgba(15, 23, 42, 0.45)",
 						}}
 					>
 						{chip.label}

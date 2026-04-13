@@ -1,16 +1,21 @@
 import { Box, Container, Flex, Grid, Heading, Text } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
 	SECTION_CONTAINER_PROPS,
 	SECTION_SCROLL_MARGIN_TOP,
 	SECTION_VERTICAL_PADDING,
 } from "@/theme/sectionLayout";
 import { PersonalProjectCard } from "./personalProjects/PersonalProjectCard";
-import { personalProjects } from "./personalProjects/personalProjects.constants";
+import { PersonalProjectDetailsDrawer } from "./personalProjects/PersonalProjectDetailsDrawer";
+import {
+	type PersonalProject,
+	personalProjects,
+} from "./personalProjects/personalProjects.constants";
 import { usePersonalProjectsAnimations } from "./personalProjects/usePersonalProjectsAnimations";
 
 export function PersonalProjects() {
 	const sectionRef = useRef<HTMLDivElement>(null);
+	const [selectedProject, setSelectedProject] = useState<PersonalProject | null>(null);
 	usePersonalProjectsAnimations({ sectionRef });
 
 	return (
@@ -55,7 +60,7 @@ export function PersonalProjects() {
 							lineHeight={{ base: 1.8, md: 1.75 }}
 						>
 							Production-focused side projects where I own product flow, interaction detail, and
-							frontend architecture end to end.
+							fullstack <strong>(Next.js & React)</strong> architecture end to end.
 						</Text>
 					</Box>
 
@@ -73,12 +78,18 @@ export function PersonalProjects() {
 								<PersonalProjectCard
 									project={project}
 									projectNumber={String(index + 1).padStart(2, "0")}
+									onViewDetails={setSelectedProject}
 								/>
 							</Box>
 						))}
 					</Grid>
 				</Flex>
 			</Container>
+			<PersonalProjectDetailsDrawer
+				project={selectedProject}
+				isOpen={Boolean(selectedProject)}
+				onClose={() => setSelectedProject(null)}
+			/>
 		</Box>
 	);
 }
