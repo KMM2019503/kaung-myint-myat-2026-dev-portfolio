@@ -5,8 +5,9 @@ import Contact from "@/components/sections/Contact";
 import Experience from "@/components/sections/Experience";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
-import SeniorRecommendations from "@/components/sections/SeniorRecommendations";
 import { HERO_PRIMARY_APPEAR_DURATION_MS } from "@/components/sections/hero/heroAnimationTimings";
+import PersonalProjects from "@/components/sections/PersonalProjects";
+import SeniorRecommendations from "@/components/sections/SeniorRecommendations";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
@@ -97,6 +98,7 @@ function App() {
 						<Hero />
 						<Experience />
 						<FeaturedProjects />
+						<PersonalProjects />
 						<SeniorRecommendations />
 						<Contact />
 					</Box>
