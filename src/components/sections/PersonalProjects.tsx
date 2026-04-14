@@ -74,7 +74,7 @@ export function PersonalProjects() {
 						alignItems="stretch"
 					>
 						{personalProjects.map((project, index) => (
-							<Box key={project.id} data-personal-project-card>
+							<Box key={project.id} data-personal-project-card minW={0}>
 								<PersonalProjectCard
 									project={project}
 									projectNumber={String(index + 1).padStart(2, "0")}

@@ -53,6 +53,9 @@ export function PersonalProjectCard({
 			position="relative"
 			overflow="hidden"
 			h="full"
+			w="full"
+			minW={0}
+			maxW="full"
 			transform={{ md: "rotate(2deg)" }}
 			transition="transform 240ms cubic-bezier(0.22, 1, 0.36, 1)"
 			willChange="transform"
@@ -90,7 +93,7 @@ export function PersonalProjectCard({
 				bg="radial-gradient(circle, color-mix(in srgb, var(--color-primary-500) 26%, transparent), transparent 72%)"
 			/>
 
-			<Flex position="relative" direction="column" h="full" gap={{ base: 3, md: 4 }}>
+			<Flex position="relative" direction="column" h="full" minW={0} gap={{ base: 3, md: 4 }}>
 				<Flex direction="column" gap={{ base: 4, md: 5 }}>
 					<Flex
 						align={{ base: "flex-start", sm: "center" }}
@@ -174,7 +177,7 @@ export function PersonalProjectCard({
 					</Text>
 				</Box>
 
-				<Box>
+				<Box minW={0}>
 					<Text
 						fontSize={{ base: "2xs", md: "xs" }}
 						fontWeight="700"
@@ -185,7 +188,7 @@ export function PersonalProjectCard({
 					>
 						Tech Stack
 					</Text>
-					<Box position="relative" overflow="hidden">
+					<Box position="relative" overflow="hidden" w="full" minW={0}>
 						<Flex
 							w="max-content"
 							gap={2}
