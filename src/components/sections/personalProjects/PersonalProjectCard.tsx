@@ -56,10 +56,10 @@ export function PersonalProjectCard({
 			transform={{ md: "rotate(2deg)" }}
 			transition="transform 240ms cubic-bezier(0.22, 1, 0.36, 1)"
 			willChange="transform"
-			borderRadius={{ base: "24px", md: "28px" }}
+			borderRadius={{ base: "20px", md: "28px" }}
 			border="1px solid color-mix(in srgb, var(--surface-floating-border) 88%, transparent)"
 			background="linear-gradient(130deg, color-mix(in srgb, var(--color-primary-100) 48%, transparent), color-mix(in srgb, var(--surface-floating-solid) 88%, transparent))"
-			p={{ base: 4.5, md: 5 }}
+			p={{ base: 4, md: 5 }}
 			css={{
 				"@media (hover: hover)": {
 					"&:hover, &:focus-within": {
@@ -90,8 +90,8 @@ export function PersonalProjectCard({
 				bg="radial-gradient(circle, color-mix(in srgb, var(--color-primary-500) 26%, transparent), transparent 72%)"
 			/>
 
-			<Flex position="relative" direction="column" h="full" gap={{ base: 3.5, md: 4 }}>
-				<Flex direction="column" gap={{ base: 4.5, md: 5 }}>
+			<Flex position="relative" direction="column" h="full" gap={{ base: 3, md: 4 }}>
+				<Flex direction="column" gap={{ base: 4, md: 5 }}>
 					<Flex
 						align={{ base: "flex-start", sm: "center" }}
 						justify="space-between"
@@ -114,6 +114,7 @@ export function PersonalProjectCard({
 							Personal Build
 						</Badge>
 						<Text
+							display={{ base: "none", md: "block" }}
 							fontSize={{ base: "2xs", md: "xs" }}
 							fontWeight="700"
 							letterSpacing="0.2em"
@@ -124,29 +125,32 @@ export function PersonalProjectCard({
 						</Text>
 					</Flex>
 
-					<Box position="relative" overflow="hidden" borderRadius={{ base: "16px", md: "18px" }}>
+					<Box position="relative" overflow="hidden" borderRadius={{ base: "14px", md: "18px" }}>
 						<Image
 							src={project.image.src}
 							alt={project.image.alt}
 							w="full"
-							h={{ base: "180px", md: "170px", xl: "180px" }}
+							h={{ base: "150px", md: "170px", xl: "180px" }}
 							objectFit="cover"
 						/>
 					</Box>
 				</Flex>
 
-				<Box>
+				<Box minW={0}>
 					<Heading
 						as="h3"
-						fontSize={{ base: "xl", md: "medium" }}
+						fontSize={{ base: "lg", md: "medium" }}
 						fontWeight="extrabold"
 						letterSpacing="-0.02em"
-						lineHeight={{ base: 1.2, md: 1.18 }}
+						lineHeight={{ base: 1.25, md: 1.18 }}
 						css={{
 							display: "-webkit-box",
-							WebkitLineClamp: 2,
+							WebkitLineClamp: 3,
 							WebkitBoxOrient: "vertical",
 							overflow: "hidden",
+							"@media screen and (min-width: 48em)": {
+								WebkitLineClamp: 2,
+							},
 						}}
 					>
 						{project.projectTitle}
@@ -158,9 +162,12 @@ export function PersonalProjectCard({
 						color="var(--color-text-secondary)"
 						css={{
 							display: "-webkit-box",
-							WebkitLineClamp: 3,
+							WebkitLineClamp: 4,
 							WebkitBoxOrient: "vertical",
 							overflow: "hidden",
+							"@media screen and (min-width: 48em)": {
+								WebkitLineClamp: 3,
+							},
 						}}
 					>
 						{project.oneLineSummary}
@@ -221,6 +228,7 @@ export function PersonalProjectCard({
 							})}
 						</Flex>
 						<Box
+							display={{ base: "none", md: "block" }}
 							position="absolute"
 							left={0}
 							top={0}
@@ -230,6 +238,7 @@ export function PersonalProjectCard({
 							bg="linear-gradient(to right, color-mix(in srgb, var(--surface-floating-solid) 96%, transparent), transparent)"
 						/>
 						<Box
+							display={{ base: "none", md: "block" }}
 							position="absolute"
 							right={0}
 							top={0}
@@ -241,7 +250,12 @@ export function PersonalProjectCard({
 					</Box>
 				</Box>
 
-				<Grid mt="auto" w="full" templateColumns="repeat(2, minmax(0, 1fr))" gap={2.5}>
+				<Grid
+					mt="auto"
+					w="full"
+					templateColumns={{ base: "1fr", md: "repeat(2, minmax(0, 1fr))" }}
+					gap={2.5}
+				>
 					<PersonalProjectDetailsButton onClick={() => onViewDetails(project)} />
 					<PersonalProjectLiveSiteButton liveUrl={project.liveUrl} />
 				</Grid>
