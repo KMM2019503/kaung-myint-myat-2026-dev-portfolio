@@ -14,6 +14,7 @@ import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
+import { sectionVisibility } from "@/config/featureFlags";
 import { useSeoMetadata } from "@/seo/useSeoMetadata";
 
 const HERO_ASSET_SOURCES = [heroImage, iceBallImage, lavaBallImage, spaceBallImage];
@@ -114,12 +115,12 @@ function App() {
 			<AppToaster />
 
 			<Box as="main" position="relative" zIndex="1">
-				<Hero />
-				<Experience />
-				<FeaturedProjects />
-				<PersonalProjects />
-				<SeniorRecommendations />
-				<Contact />
+				{sectionVisibility.hero ? <Hero /> : null}
+				{sectionVisibility.experience ? <Experience /> : null}
+				{sectionVisibility.featuredProjects ? <FeaturedProjects /> : null}
+				{sectionVisibility.personalProjects ? <PersonalProjects /> : null}
+				{sectionVisibility.seniorRecommendations ? <SeniorRecommendations /> : null}
+				{sectionVisibility.contact ? <Contact /> : null}
 			</Box>
 		</Box>
 	);
