@@ -162,16 +162,6 @@ export default function AppLoadingScreen() {
 						<Box className="app-loading-progress-fill" />
 					</Box>
 				</Box>
-
-				<Text
-					fontSize={{ base: "sm", md: "md" }}
-					fontWeight="600"
-					letterSpacing="0.35px"
-					color="var(--color-text-secondary)"
-					textAlign="center"
-				>
-					Loading hero assets...
-				</Text>
 			</Box>
 		</Box>
 	);
