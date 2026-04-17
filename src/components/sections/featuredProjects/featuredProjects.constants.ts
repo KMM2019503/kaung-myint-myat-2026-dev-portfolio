@@ -6,6 +6,8 @@ export const projectIntroCodeLines = [
 	"};",
 ] as const;
 
+export const FEATURED_PROJECTS_END_SCROLL_DELAY_VIEWPORTS = 0.22;
+
 export interface IntroFloatingChip {
 	id: string;
 	label: string;

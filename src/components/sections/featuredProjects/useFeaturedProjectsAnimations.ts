@@ -1,6 +1,7 @@
 import type { RefObject } from "react";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { FEATURED_PROJECTS_END_SCROLL_DELAY_VIEWPORTS } from "./featuredProjects.constants";
 
 interface UseFeaturedProjectsAnimationsArgs {
 	sectionRef: RefObject<HTMLDivElement | null>;
@@ -30,22 +31,37 @@ export function useFeaturedProjectsAnimations({
 
 		const ctx = gsap.context(() => {
 			const panels = gsap.utils.toArray<HTMLElement>("[data-project-panel]");
-			let horizontalTween: gsap.core.Tween | null = null;
+			let horizontalTween: gsap.core.Animation | null = null;
 
 			if (panels.length > 1) {
-				horizontalTween = gsap.to(trackRef.current, {
-					xPercent: -100 * (panels.length - 1),
-					ease: "none",
+				const horizontalScrollDistance = window.innerWidth * (panels.length - 1);
+				const endDelayScrollDistance =
+					window.innerWidth * FEATURED_PROJECTS_END_SCROLL_DELAY_VIEWPORTS;
+				const totalPinnedScrollDistance = horizontalScrollDistance + endDelayScrollDistance;
+
+				const horizontalTimeline = gsap.timeline({
+					defaults: { ease: "none" },
 					scrollTrigger: {
 						trigger: sectionRef.current,
 						start: "top top",
-						end: () => `+=${window.innerWidth * (panels.length - 1)}`,
+						end: () => `+=${totalPinnedScrollDistance}`,
 						pin: true,
 						scrub: 1,
 						invalidateOnRefresh: true,
 						anticipatePin: 1,
 					},
 				});
+
+				horizontalTimeline.to(trackRef.current, {
+					xPercent: -100 * (panels.length - 1),
+					duration: horizontalScrollDistance,
+				});
+
+				if (endDelayScrollDistance > 0) {
+					horizontalTimeline.to({}, { duration: endDelayScrollDistance });
+				}
+
+				horizontalTween = horizontalTimeline;
 			}
 
 			ScrollTrigger.create({
