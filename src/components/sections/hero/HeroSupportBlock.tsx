@@ -207,7 +207,8 @@ export function HeroSupportBlock({ supportRef }: HeroSupportBlockProps) {
 
 			<Flex
 				mt={{ base: 5, md: 6 }}
-				align="center"
+				align={{ base: "stretch", md: "center" }}
+				direction={{ base: "column", md: "row" }}
 				gap={{ base: 3, md: 4 }}
 				wrap={{ base: "wrap", md: "nowrap" }}
 			>
@@ -215,16 +216,20 @@ export function HeroSupportBlock({ supportRef }: HeroSupportBlockProps) {
 					href={downloadCvHref}
 					download="kaung_myint_myat_resume.pdf"
 					display="inline-flex"
-					fontSize={{ base: "md", md: "lg" }}
-					fontWeight="700"
-					color="var(--color-text-primary)"
+					alignItems="center"
+					justifyContent="center"
 					textDecoration="none"
-					letterSpacing="-0.01em"
-					w="fit-content"
+					w={{ base: "full", md: "fit-content" }}
+					borderRadius="full"
+					fontSize={{ base: "sm", md: "sm" }}
+					fontWeight="700"
+					letterSpacing="0.01em"
 					whiteSpace="nowrap"
-					_hover={{
-						color: "var(--color-text-accent-strong)",
-					}}
+					bg="var(--color-primary-600)"
+					color="var(--color-text-inverse)"
+					_hover={{ bg: "var(--color-primary-700)" }}
+					px={{ base: 3.5, md: 4.5 }}
+					py={{ base: 3.25, md: 2.75 }}
 					transition="all 0.24s ease"
 				>
 					Download CV
@@ -236,12 +241,13 @@ export function HeroSupportBlock({ supportRef }: HeroSupportBlockProps) {
 					alignItems="center"
 					justifyContent="center"
 					px={{ base: 3.5, md: 4.5 }}
-					py={{ base: 2.25, md: 2.75 }}
+					py={{ base: 3.25, md: 2.75 }}
 					borderRadius="full"
 					fontSize={{ base: "sm", md: "md" }}
 					fontWeight="700"
 					color="var(--color-text-primary)"
 					textDecoration="none"
+					w={{ base: "full", md: "fit-content" }}
 					border="1px solid"
 					borderColor="var(--color-border)"
 					bg="color-mix(in srgb, var(--color-bg-primary) 72%, transparent)"

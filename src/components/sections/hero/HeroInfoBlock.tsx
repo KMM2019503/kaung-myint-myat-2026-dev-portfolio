@@ -21,17 +21,8 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 				align="end"
 				gap={{ base: 2, md: 2.5 }}
 				w="fit-content"
-				px={{ base: 3, md: 3.5 }}
 				py={{ base: 1.5, md: 2 }}
-				borderRadius="2xl"
-				bg="color-mix(in srgb, var(--color-primary-100) 14%, transparent)"
-				border="1px solid"
-				borderColor="color-mix(in srgb, var(--color-primary-500) 32%, transparent)"
 				color="var(--color-text-accent-strong)"
-				css={{
-					boxShadow:
-						"0 14px 24px -20px color-mix(in srgb, var(--color-text-accent-strong) 70%, transparent)",
-				}}
 			>
 				<Text
 					fontSize={{ base: "xl", md: "3xl", xl: "3xl" }}
@@ -39,7 +30,7 @@ export function HeroInfoBlock({ headingRef }: HeroInfoBlockProps) {
 					letterSpacing="0.06em"
 					lineHeight="1"
 				>
-					Hola,
+					Hey,
 				</Text>
 				<Text
 					fontSize={{ base: "xs", sm: "sm" }}
