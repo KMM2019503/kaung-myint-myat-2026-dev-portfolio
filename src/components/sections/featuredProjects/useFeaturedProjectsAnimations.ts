@@ -38,7 +38,14 @@ export function useFeaturedProjectsAnimations({
 				const endDelayScrollDistance =
 					window.innerWidth * FEATURED_PROJECTS_END_SCROLL_DELAY_VIEWPORTS;
 				const totalPinnedScrollDistance = horizontalScrollDistance + endDelayScrollDistance;
-
+				const snapConfig: ScrollTrigger.Vars["snap"] =
+					panels.length > 1
+						? {
+								snapTo: 1 / (panels.length - 1),
+								duration: { min: 0.15, max: 0.5 },
+								ease: "power1.inOut",
+							}
+						: undefined;
 				const horizontalTimeline = gsap.timeline({
 					defaults: { ease: "none" },
 					scrollTrigger: {
@@ -46,9 +53,10 @@ export function useFeaturedProjectsAnimations({
 						start: "top top",
 						end: () => `+=${totalPinnedScrollDistance}`,
 						pin: true,
-						scrub: 1,
+						scrub: 2.5,
 						invalidateOnRefresh: true,
 						anticipatePin: 1,
+						snap: snapConfig,
 					},
 				});
 
