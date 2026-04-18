@@ -11,6 +11,7 @@ interface UseFeaturedProjectsAnimationsArgs {
 	introBadgeTickerRef: RefObject<HTMLDivElement | null>;
 	shouldStartTyping: boolean;
 	setShouldStartTyping: (value: boolean) => void;
+	onHorizontalProgressChange?: (progress: number) => void;
 }
 
 export function useFeaturedProjectsAnimations({
@@ -21,6 +22,7 @@ export function useFeaturedProjectsAnimations({
 	introBadgeTickerRef,
 	shouldStartTyping,
 	setShouldStartTyping,
+	onHorizontalProgressChange,
 }: UseFeaturedProjectsAnimationsArgs) {
 	useEffect(() => {
 		if (!sectionRef.current || !trackRef.current) {
@@ -38,14 +40,6 @@ export function useFeaturedProjectsAnimations({
 				const endDelayScrollDistance =
 					window.innerWidth * FEATURED_PROJECTS_END_SCROLL_DELAY_VIEWPORTS;
 				const totalPinnedScrollDistance = horizontalScrollDistance + endDelayScrollDistance;
-				const snapConfig: ScrollTrigger.Vars["snap"] =
-					panels.length > 1
-						? {
-								snapTo: 1 / (panels.length - 1),
-								duration: { min: 0.15, max: 0.5 },
-								ease: "power1.inOut",
-							}
-						: undefined;
 				const horizontalTimeline = gsap.timeline({
 					defaults: { ease: "none" },
 					scrollTrigger: {
@@ -56,7 +50,19 @@ export function useFeaturedProjectsAnimations({
 						scrub: 2.5,
 						invalidateOnRefresh: true,
 						anticipatePin: 1,
-						snap: snapConfig,
+						onUpdate: (self) => {
+							const normalizedProgress =
+								horizontalScrollDistance <= 0
+									? 1
+									: Math.min(
+											1,
+											Math.max(
+												0,
+												(self.progress * totalPinnedScrollDistance) / horizontalScrollDistance,
+											),
+										);
+							onHorizontalProgressChange?.(normalizedProgress);
+						},
 					},
 				});
 
@@ -70,6 +76,8 @@ export function useFeaturedProjectsAnimations({
 				}
 
 				horizontalTween = horizontalTimeline;
+			} else {
+				onHorizontalProgressChange?.(1);
 			}
 
 			ScrollTrigger.create({
@@ -203,7 +211,7 @@ export function useFeaturedProjectsAnimations({
 		}, sectionRef);
 
 		return () => ctx.revert();
-	}, [sectionRef, setShouldStartTyping, trackRef]);
+	}, [onHorizontalProgressChange, sectionRef, setShouldStartTyping, trackRef]);
 
 	useEffect(() => {
 		if (!shouldStartTyping || !introCardRef.current) {

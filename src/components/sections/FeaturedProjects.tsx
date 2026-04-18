@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { SECTION_SCROLL_MARGIN_TOP } from "@/theme/sectionLayout";
+import { FeaturedProjectsScrollProgress } from "./featuredProjects/FeaturedProjectsScrollProgress";
 import {
 	projectCaseStudies,
 	projectIntroCodeLines,
@@ -17,6 +18,18 @@ export function FeaturedProjects() {
 	const introChipLayerRef = useRef<HTMLDivElement>(null);
 	const introBadgeTickerRef = useRef<HTMLDivElement>(null);
 	const [shouldStartTyping, setShouldStartTyping] = useState(false);
+	const [horizontalProgress, setHorizontalProgress] = useState(0);
+
+	const handleHorizontalProgressChange = useCallback((progress: number) => {
+		if (!Number.isFinite(progress)) {
+			return;
+		}
+
+		const clampedProgress = Math.min(1, Math.max(0, progress));
+		setHorizontalProgress((currentProgress) =>
+			Math.abs(currentProgress - clampedProgress) < 0.001 ? currentProgress : clampedProgress,
+		);
+	}, []);
 
 	useFeaturedProjectsAnimations({
 		sectionRef,
@@ -26,6 +39,7 @@ export function FeaturedProjects() {
 		introBadgeTickerRef,
 		shouldStartTyping,
 		setShouldStartTyping,
+		onHorizontalProgressChange: handleHorizontalProgressChange,
 	});
 
 	const { typedCodeLines, activeTypingLine } = useProjectIntroTyping({
@@ -62,6 +76,7 @@ export function FeaturedProjects() {
 					<ProjectCaseStudyPanel key={project.id} project={project} />
 				))}
 			</Box>
+			<FeaturedProjectsScrollProgress progress={horizontalProgress} />
 		</Box>
 	);
 }
