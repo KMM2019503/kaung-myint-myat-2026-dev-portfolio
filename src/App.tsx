@@ -14,6 +14,7 @@ import AmbientBackground from "@/components/ui/AmbientBackground";
 import AppLoadingScreen from "@/components/ui/AppLoadingScreen";
 import AppToaster from "@/components/ui/AppToaster";
 import Navbar from "@/components/ui/Navbar";
+import ScrollIdleIndicator from "@/components/ui/ScrollIdleIndicator";
 import { sectionVisibility } from "@/config/featureFlags";
 import { useSeoMetadata } from "@/seo/useSeoMetadata";
 
@@ -122,6 +123,7 @@ function App() {
 				{sectionVisibility.seniorRecommendations ? <SeniorRecommendations /> : null}
 				{sectionVisibility.contact ? <Contact /> : null}
 			</Box>
+			<ScrollIdleIndicator />
 		</Box>
 	);
 }

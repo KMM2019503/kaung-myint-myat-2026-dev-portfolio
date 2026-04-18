@@ -315,3 +315,64 @@ h6 {
 	);
 	animation: app-loading-progress-scan 1.4s linear infinite;
 }
+
+@keyframes scroll-idle-indicator-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+@keyframes scroll-idle-indicator-chevron {
+	0% {
+		opacity: 0;
+		transform: translateY(-4px) scale(0.92);
+	}
+	40% {
+		opacity: 0.95;
+		transform: translateY(2px) scale(1);
+	}
+	70% {
+		opacity: 0.45;
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(9px) scale(1.02);
+	}
+}
+
+.scroll-idle-indicator-float {
+	animation: scroll-idle-indicator-float 2.6s ease-in-out infinite;
+}
+
+.scroll-idle-indicator-arrow {
+	color: color-mix(in srgb, var(--color-text-accent) 68%, var(--color-text-secondary));
+	animation: scroll-idle-indicator-chevron 1.35s cubic-bezier(0.26, 0.67, 0.2, 1) infinite;
+}
+
+.dark .scroll-idle-indicator-arrow {
+	color: color-mix(in srgb, var(--color-text-accent-strong) 70%, var(--color-text-secondary));
+}
+
+.scroll-idle-indicator-arrow-first {
+	animation-delay: 0s;
+}
+
+.scroll-idle-indicator-arrow-second {
+	animation-delay: 0.22s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.scroll-idle-indicator-float {
+		animation: none;
+	}
+
+	.scroll-idle-indicator-arrow {
+		animation: none;
+		opacity: 0.72;
+		transform: none;
+	}
+}
