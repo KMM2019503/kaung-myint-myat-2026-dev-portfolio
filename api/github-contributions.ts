@@ -3,7 +3,7 @@ import type {
 	GitHubContributionCalendarPayload,
 	GitHubContributionDay,
 	GitHubContributionWeek,
-} from "../src/lib/githubContributionCalendar";
+} from "../src/lib/githubContributionCalendar.js";
 
 const GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql";
 const CONTRIBUTION_LOOKBACK_MONTHS = 7;
