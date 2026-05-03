@@ -6,6 +6,7 @@ import {
 	SECTION_SCROLL_MARGIN_TOP,
 	SECTION_VERTICAL_PADDING,
 } from "@/theme/sectionLayout";
+import GitHubContributionCalendar from "./experience/GitHubContributionCalendar";
 
 interface ExperienceItem {
 	id: string;
@@ -539,6 +540,8 @@ export function Experience() {
 							})}
 						</Flex>
 					</Box>
+
+					<GitHubContributionCalendar />
 				</Flex>
 			</Container>
 		</Box>
