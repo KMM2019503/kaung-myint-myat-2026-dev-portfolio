@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import heroImage from "@/assets/images/hero.webp";
 import iceBallImage from "@/assets/images/ice_ball.webp";
@@ -6,6 +6,7 @@ import lavaBallImage from "@/assets/images/lava_ball.webp";
 import spaceBallImage from "@/assets/images/space_ball.webp";
 import Contact from "@/components/sections/Contact";
 import Experience from "@/components/sections/Experience";
+import GitHubContributionCalendar from "@/components/sections/experience/GitHubContributionCalendar";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import Hero from "@/components/sections/Hero";
 import PersonalProjects from "@/components/sections/PersonalProjects";
@@ -17,6 +18,11 @@ import Navbar from "@/components/ui/Navbar";
 import ScrollIdleIndicator from "@/components/ui/ScrollIdleIndicator";
 import { sectionVisibility } from "@/config/featureFlags";
 import { useSeoMetadata } from "@/seo/useSeoMetadata";
+import {
+	SECTION_CONTAINER_PROPS,
+	SECTION_SCROLL_MARGIN_TOP,
+	SECTION_VERTICAL_PADDING,
+} from "@/theme/sectionLayout";
 
 const HERO_ASSET_SOURCES = [heroImage, iceBallImage, lavaBallImage, spaceBallImage];
 const MIN_LOADING_SCREEN_MS = 1800;
@@ -119,6 +125,21 @@ function App() {
 				{sectionVisibility.hero ? <Hero /> : null}
 				{sectionVisibility.experience ? <Experience /> : null}
 				{sectionVisibility.featuredProjects ? <FeaturedProjects /> : null}
+				{sectionVisibility.githubContributions ? (
+					<Box
+						as="section"
+						id="github-contributions"
+						position="relative"
+						zIndex={1}
+						overflow="hidden"
+						scrollMarginTop={SECTION_SCROLL_MARGIN_TOP}
+						py={SECTION_VERTICAL_PADDING}
+					>
+						<Container {...SECTION_CONTAINER_PROPS} position="relative" zIndex={1}>
+							<GitHubContributionCalendar />
+						</Container>
+					</Box>
+				) : null}
 				{sectionVisibility.personalProjects ? <PersonalProjects /> : null}
 				{sectionVisibility.seniorRecommendations ? <SeniorRecommendations /> : null}
 				{sectionVisibility.contact ? <Contact /> : null}

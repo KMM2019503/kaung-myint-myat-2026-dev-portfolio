@@ -20,6 +20,10 @@ export const sectionVisibility = {
 	hero: parseBooleanFlag(import.meta.env.VITE_SHOW_HERO_SECTION, true),
 	experience: parseBooleanFlag(import.meta.env.VITE_SHOW_EXPERIENCE_SECTION, true),
 	featuredProjects: parseBooleanFlag(import.meta.env.VITE_SHOW_FEATURED_PROJECTS_SECTION, true),
+	githubContributions: parseBooleanFlag(
+		import.meta.env.VITE_SHOW_GITHUB_CONTRIBUTIONS_SECTION,
+		true,
+	),
 	personalProjects: parseBooleanFlag(import.meta.env.VITE_SHOW_PERSONAL_PROJECTS_SECTION, true),
 	seniorRecommendations: parseBooleanFlag(
 		import.meta.env.VITE_SHOW_SENIOR_RECOMMENDATIONS_SECTION,
