@@ -193,11 +193,11 @@ export const projectCaseStudies: readonly ProjectCaseStudyData[] = [
 			},
 			{
 				id: "metric-core-modules",
-				label: "4 Core Modules",
-				description: "Dashboard, Base Pay & OT, Attendance (Duty Roster), and Employee.",
+				label: "5 Core Modules",
+				description: "Developed main modules with consistent design patterns.",
 			},
 		],
-		modules: ["Dashboard", "Base Pay & OT", "Attendance (Duty Roster)", "Employee"],
+		modules: ["Dashboard", "Attendances", "Leaves", "Base Pay & OT", "Employee"],
 		highlights: [
 			"Refactored legacy modules into React while maintaining full feature parity.",
 			"Improved load performance through optimized rendering and data prefetching.",
